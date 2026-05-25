@@ -1,0 +1,2292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NGWS 2026 — NextGen Wealth Summit · 4 July 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=EB+Garamond:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+      /* ═══════════════════════════════════════════════════════════════════
+   CONFIGURATION  —  replace the 4 placeholder values below
+   ═══════════════════════════════════════════════════════════════════
+
+   STEP 1 — EMAILJS  (free · 200 emails/month)
+   ─────────────────────────────────────────────
+   a) Sign up at https://emailjs.com
+   b) Add Email Service (Gmail) → copy Service ID
+   c) Create Email Template (HTML body below) → copy Template ID
+   d) Account page → copy Public Key
+
+   EMAIL TEMPLATE HTML to paste into EmailJS editor
+   ─────────────────────────────────────────────────
+   Subject line: Your NGWS 2026 Ticket — {{to_name}}
+
+   <div style="background:#111;padding:40px 32px;font-family:'Courier New',monospace;color:#FAF8F2;max-width:580px;margin:0 auto">
+     <p style="font-size:10px;letter-spacing:3px;color:#B8F500;margin:0 0 12px">TICKET CONFIRMED · NGWS 2026</p>
+     <h1 style="font-family:Georgia,serif;font-size:34px;margin:0 0 6px;letter-spacing:-1px;line-height:1">NEXT GEN<br><span style="color:#B8F500">WEALTH</span> SUMMIT.</h1>
+     <p style="font-size:12px;letter-spacing:1px;color:rgba(250,248,242,0.4);margin:0 0 32px">THE CHRISTIAN BRETHREN CHURCH</p>
+     <p style="font-family:Georgia,serif;font-size:17px;color:rgba(250,248,242,0.65);margin:0 0 32px">Hi {{to_name}}, your seat at NGWS 2026 is confirmed. Present this email or your downloaded ticket at the door.</p>
+     <div style="border:0.5px solid rgba(250,248,242,0.15);padding:24px;margin-bottom:28px">
+       <table style="width:100%;font-size:12px;letter-spacing:1px;border-collapse:collapse">
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">ATTENDEE</td><td style="color:#B8F500;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">{{to_name}}</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TICKET NO.</td><td style="color:#B8F500;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">{{serial}}</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">DATE</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">Saturday 4 July 2026</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TIME</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">09:00 — 17:00</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">VENUE</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TCBC Auditorium</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0">ENTRY</td><td style="padding:8px 0">FREE — present this at the door</td></tr>
+       </table>
+     </div>
+     <p style="font-size:10px;letter-spacing:2px;color:rgba(250,248,242,0.25);margin:0">FAITH · FINANCE · FUTURE · NGWS 2026 · TCBC</p>
+   </div>
+
+   Template variables used: {{to_name}}  {{to_email}}  {{serial}}
+   Set "To Email" field in EmailJS to:  {{to_email}}
+
+   ─────────────────────────────────────────────
+   STEP 2 — SHEETDB  (free · registrant list in Google Sheets)
+   ─────────────────────────────────────────────
+   a) Create a Google Sheet with header row:
+      Name | Email | Phone | Source | Serial | Timestamp
+   b) Sign up at https://sheetdb.io → New connection → paste sheet URL
+   c) Copy the API URL  (e.g. https://sheetdb.io/api/v1/abc123xyz)
+
+   ═══════════════════════════════════════════════════════════════════ */
+      const CFG = {
+        EMAILJS_PUBLIC_KEY: "lKZ5jIxav3mK6JvZa",
+        EMAILJS_SERVICE_ID: "service_599tber",
+        EMAILJS_TEMPLATE_ID: "template_b8kmdxl",
+        SHEETDB_API_URL: "https://sheetdb.io/api/v1/0wpy9tv7ank04",
+        TOTAL_SEATS: 120,
+        EVENT_DATE: "2026-07-04T09:00:00",
+      };
+    </script>
+
+    <style>
+      :root {
+        --lime: #b8f500;
+        --ink: #111111;
+        --paper: #faf8f2;
+        --deep: #0d7a3a;
+        --stone: #e5e0cb;
+        --fd: "Archivo Black", sans-serif;
+        --fs: "EB Garamond", serif;
+        --fm: "Space Mono", monospace;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--fm);
+        background: var(--ink);
+        color: var(--paper);
+        overflow-x: hidden;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+        height: 56px;
+        background: var(--ink);
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+      }
+      .nav-logo {
+        font-family: var(--fd);
+        font-size: 18px;
+        color: var(--paper);
+        letter-spacing: -0.5px;
+      }
+      .nav-logo span {
+        color: var(--lime);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.5);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--paper);
+      }
+      .nav-cta {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .nav-cta:hover {
+        background: #ceff1a;
+      }
+
+      /* TICKER */
+      .ticker-wrap {
+        overflow: hidden;
+        background: var(--lime);
+        padding: 9px 0;
+        white-space: nowrap;
+      }
+      .ticker-inner {
+        display: inline-flex;
+        animation: ticker 32s linear infinite;
+      }
+      .ticker-inner span {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--ink);
+        padding: 0 28px;
+      }
+      @keyframes ticker {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* HERO */
+      #hero {
+        min-height: 100vh;
+        background: var(--ink);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 100px 60px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-lbl {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.32);
+        margin-bottom: 24px;
+      }
+      .wm {
+        font-family: var(--fd);
+        line-height: 0.88;
+        letter-spacing: -3px;
+        margin-bottom: 40px;
+      }
+      .wm .ln {
+        font-size: clamp(64px, 11vw, 130px);
+        color: var(--paper);
+        display: block;
+      }
+      .wm .lw {
+        font-size: clamp(64px, 11vw, 130px);
+        color: var(--lime);
+        display: block;
+      }
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        margin-bottom: 48px;
+        flex-wrap: wrap;
+      }
+      .hmi {
+        font-family: var(--fm);
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: rgba(250, 248, 242, 0.38);
+      }
+      .hmi strong {
+        display: block;
+        font-size: 15px;
+        color: var(--paper);
+        margin-bottom: 2px;
+      }
+      .hero-tag {
+        font-family: var(--fs);
+        font-size: 20px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.5);
+        margin-bottom: 48px;
+        max-width: 520px;
+      }
+      .hero-act {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .btn-p {
+        display: inline-block;
+        font-family: var(--fm);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        padding: 16px 36px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+      }
+      .btn-p:hover {
+        background: #ceff1a;
+        transform: translateY(-1px);
+      }
+      .btn-g {
+        display: inline-block;
+        font-family: var(--fm);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--paper);
+        padding: 15px 36px;
+        text-decoration: none;
+        border: 0.5px solid rgba(250, 248, 242, 0.22);
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .btn-g:hover {
+        border-color: var(--paper);
+      }
+      .seat-bdg {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1px;
+        background: rgba(250, 248, 242, 0.04);
+        border: 0.5px solid rgba(250, 248, 242, 0.1);
+        color: rgba(250, 248, 242, 0.38);
+        padding: 8px 16px;
+      }
+      .seat-bdg span {
+        color: var(--lime);
+        font-weight: 700;
+      }
+      .cd {
+        display: inline-flex;
+        flex-direction: column;
+        margin-bottom: 36px;
+        text-align: left;
+      }
+      .cd-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.22);
+        margin-bottom: 10px;
+      }
+      .cd-grid {
+        display: flex;
+        gap: 16px;
+      }
+      .cd-u {
+        text-align: center;
+      }
+      .cd-n {
+        font-family: var(--fd);
+        font-size: 36px;
+        color: var(--lime);
+        line-height: 1;
+        display: block;
+      }
+      .cd-s {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.22);
+        display: block;
+        margin-top: 4px;
+      }
+      .fff {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(250, 248, 242, 0.12);
+        margin-top: 48px;
+      }
+
+      /* SHARED SECTION */
+      section {
+        padding: 100px 60px;
+      }
+      .sl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.28);
+        margin-bottom: 16px;
+      }
+      .sl-dk {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.32);
+        margin-bottom: 16px;
+      }
+      .rule {
+        width: 48px;
+        height: 1px;
+        background: var(--lime);
+        margin-bottom: 32px;
+      }
+      .rule-dk {
+        width: 48px;
+        height: 1px;
+        background: var(--ink);
+        margin-bottom: 32px;
+      }
+
+      /* ABOUT */
+      #about {
+        background: var(--ink);
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .ab-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+      }
+      .ab-h {
+        font-family: var(--fd);
+        font-size: clamp(36px, 5vw, 64px);
+        line-height: 0.92;
+        letter-spacing: -2px;
+        margin-bottom: 32px;
+      }
+      .ab-h em {
+        color: var(--lime);
+        font-style: normal;
+      }
+      .ab-body {
+        font-family: var(--fs);
+        font-size: 18px;
+        line-height: 1.75;
+        color: rgba(250, 248, 242, 0.62);
+      }
+      .ab-body p + p {
+        margin-top: 16px;
+      }
+      .pillars {
+        display: flex;
+        flex-direction: column;
+        margin-top: 32px;
+      }
+      .pillar {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .p-n {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: var(--lime);
+        width: 24px;
+      }
+      .p-t {
+        font-family: var(--fd);
+        font-size: 22px;
+        letter-spacing: -0.5px;
+      }
+      .p-s {
+        font-family: var(--fs);
+        font-size: 14px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.32);
+        margin-left: auto;
+      }
+
+      /* SPEAKER */
+      #speaker {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .sp-wrap {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .sp-frame {
+        background: var(--stone);
+        aspect-ratio: 3/4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        position: relative;
+      }
+      .sp-frame-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: rgba(17, 17, 17, 0.28);
+        text-align: center;
+        line-height: 1.6;
+      }
+      .sp-badge {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--deep);
+        display: inline-block;
+        border: 0.5px solid var(--deep);
+        padding: 5px 12px;
+        margin-bottom: 20px;
+      }
+      .sp-name {
+        font-family: var(--fd);
+        font-size: clamp(32px, 4vw, 52px);
+        letter-spacing: -2px;
+        line-height: 0.9;
+        margin-bottom: 12px;
+        color: var(--ink);
+      }
+      .sp-name em {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--ink);
+        font-style: normal;
+      }
+      .sp-title {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.38);
+        margin-bottom: 32px;
+      }
+      .sp-rule {
+        width: 40px;
+        height: 1px;
+        background: var(--ink);
+        margin-bottom: 24px;
+      }
+      .sp-topic {
+        font-family: var(--fs);
+        font-size: 20px;
+        font-style: italic;
+        line-height: 1.55;
+        color: rgba(17, 17, 17, 0.65);
+        margin-bottom: 32px;
+        max-width: 420px;
+      }
+      .sp-meta {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .spm {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.32);
+      }
+      .spm strong {
+        display: block;
+        font-family: var(--fd);
+        font-size: 13px;
+        color: var(--ink);
+        letter-spacing: -0.3px;
+        margin-bottom: 4px;
+      }
+
+      /* PROGRAM */
+      #program {
+        background: var(--ink);
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .prog-h {
+        font-family: var(--fd);
+        font-size: clamp(36px, 5vw, 56px);
+        letter-spacing: -2px;
+        line-height: 0.92;
+        margin-bottom: 60px;
+      }
+      .prog-h em {
+        color: var(--lime);
+        font-style: normal;
+      }
+      .pt {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .pt tr {
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+        transition: background 0.15s;
+      }
+      .pt tr:hover {
+        background: rgba(184, 245, 0, 0.03);
+      }
+      .pt td {
+        padding: 20px 0;
+        vertical-align: top;
+      }
+      .ptime {
+        font-family: var(--fm);
+        font-size: 12px;
+        color: var(--lime);
+        letter-spacing: 1px;
+        width: 100px;
+        padding-right: 20px;
+        white-space: nowrap;
+      }
+      .ptit {
+        font-family: var(--fd);
+        font-size: 18px;
+        letter-spacing: -0.5px;
+        color: var(--paper);
+      }
+      .psub {
+        font-family: var(--fs);
+        font-size: 14px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.32);
+        margin-top: 4px;
+      }
+      .ptag {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        padding: 4px 10px;
+        border: 0.5px solid rgba(184, 245, 0, 0.32);
+        color: var(--lime);
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      /* FAQ */
+      #faq {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .faq-h {
+        font-family: var(--fd);
+        font-size: clamp(36px, 5vw, 56px);
+        letter-spacing: -2px;
+        line-height: 0.92;
+        color: var(--ink);
+        margin-bottom: 60px;
+      }
+      .faq-h em {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--ink);
+        font-style: normal;
+      }
+      .fi2 {
+        border-top: 0.5px solid rgba(17, 17, 17, 0.12);
+      }
+      .fi2:last-child {
+        border-bottom: 0.5px solid rgba(17, 17, 17, 0.12);
+      }
+      .fq {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 0;
+        cursor: pointer;
+        gap: 20px;
+        user-select: none;
+      }
+      .fqt {
+        font-family: var(--fd);
+        font-size: 18px;
+        letter-spacing: -0.3px;
+        color: var(--ink);
+      }
+      .ftog {
+        width: 24px;
+        height: 24px;
+        border: 0.5px solid rgba(17, 17, 17, 0.22);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--ink);
+        transition: background 0.2s;
+        line-height: 1;
+      }
+      .fi2.open .ftog {
+        background: var(--lime);
+        border-color: var(--lime);
+      }
+      .fa2 {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .fai {
+        font-family: var(--fs);
+        font-size: 17px;
+        line-height: 1.7;
+        color: rgba(17, 17, 17, 0.58);
+        padding: 0 0 24px;
+        max-width: 640px;
+      }
+      .fi2.open .fa2 {
+        max-height: 300px;
+      }
+
+      /* REGISTER */
+      #register {
+        background: var(--ink);
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .rg-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+      }
+      .rg-h {
+        font-family: var(--fd);
+        font-size: clamp(36px, 5vw, 72px);
+        letter-spacing: -3px;
+        line-height: 0.88;
+        margin-bottom: 32px;
+      }
+      .rg-h em {
+        color: var(--lime);
+        font-style: normal;
+        display: block;
+      }
+      .rg-sub {
+        font-family: var(--fs);
+        font-size: 18px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.42);
+        margin-bottom: 40px;
+      }
+      .rg-dets {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .rd {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .rd-l {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--lime);
+        width: 56px;
+        flex-shrink: 0;
+        padding-top: 2px;
+      }
+      .rd-v {
+        font-family: var(--fs);
+        font-size: 17px;
+        color: rgba(250, 248, 242, 0.72);
+      }
+      .rform {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .fg {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .fl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.32);
+      }
+      .fi,
+      .fs2 {
+        font-family: var(--fm);
+        font-size: 14px;
+        background: rgba(250, 248, 242, 0.04);
+        border: 0.5px solid rgba(250, 248, 242, 0.1);
+        color: var(--paper);
+        padding: 14px 16px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        width: 100%;
+        -webkit-appearance: none;
+        border-radius: 0;
+      }
+      .fi:focus,
+      .fs2:focus {
+        border-color: var(--lime);
+        background: rgba(184, 245, 0, 0.04);
+      }
+      .fi::placeholder {
+        color: rgba(250, 248, 242, 0.16);
+      }
+      .fs2 option {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .frow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .ferr {
+        font-family: var(--fm);
+        font-size: 10px;
+        color: #ff7070;
+        letter-spacing: 1px;
+        display: none;
+      }
+      .ferr.show {
+        display: block;
+      }
+      .sc {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: rgba(250, 248, 242, 0.22);
+        text-align: right;
+      }
+      .sc span {
+        color: var(--lime);
+      }
+      .btn-reg {
+        font-family: var(--fm);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 18px;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        width: 100%;
+      }
+      .btn-reg:hover {
+        background: #ceff1a;
+      }
+      .btn-reg:active {
+        transform: scale(0.99);
+      }
+      .btn-reg:disabled {
+        background: rgba(184, 245, 0, 0.28);
+        cursor: not-allowed;
+      }
+      .fnote {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: rgba(250, 248, 242, 0.16);
+        text-align: center;
+      }
+      .sbanner {
+        display: none;
+        font-family: var(--fm);
+        font-size: 12px;
+        letter-spacing: 1px;
+        padding: 14px 18px;
+        border: 0.5px solid;
+      }
+      .sbanner.show {
+        display: block;
+      }
+      .sb-ok {
+        color: var(--lime);
+        border-color: rgba(184, 245, 0, 0.28);
+        background: rgba(184, 245, 0, 0.04);
+      }
+      .sb-err {
+        color: #ff8080;
+        border-color: rgba(255, 128, 128, 0.28);
+        background: rgba(255, 128, 128, 0.04);
+      }
+
+      /* TICKET / SUCCESS */
+      #success {
+        display: none;
+        background: var(--ink);
+        padding: 100px 60px;
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      #success.show {
+        display: block;
+      }
+      .suc-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--lime);
+        margin-bottom: 16px;
+      }
+      .suc-h {
+        font-family: var(--fd);
+        font-size: clamp(32px, 5vw, 56px);
+        letter-spacing: -2px;
+        line-height: 0.92;
+        margin-bottom: 16px;
+      }
+      .suc-sub {
+        font-family: var(--fs);
+        font-size: 18px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.42);
+        margin-bottom: 60px;
+      }
+      .tw {
+        max-width: 700px;
+        margin: 0 auto 40px;
+      }
+      .atape {
+        background: var(--lime);
+        overflow: hidden;
+        padding: 6px 0;
+        white-space: nowrap;
+      }
+      .atape-in {
+        display: inline-flex;
+        animation: ticker 14s linear infinite;
+      }
+      .atape-in span {
+        font-family: var(--fm);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--ink);
+        padding: 0 20px;
+        text-transform: uppercase;
+      }
+      .tkt {
+        background: var(--ink);
+        border: 0.5px solid rgba(250, 248, 242, 0.12);
+        display: flex;
+        position: relative;
+        overflow: hidden;
+      }
+      .tl {
+        background: var(--paper);
+        width: 210px;
+        flex-shrink: 0;
+        padding: 28px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .tl-ev {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.32);
+      }
+      .tl-wm {
+        font-family: var(--fd);
+        font-size: 21px;
+        letter-spacing: -1px;
+        line-height: 0.9;
+        color: var(--ink);
+      }
+      .tl-wm .tw2 {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--ink);
+      }
+      .tl-meta {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 1px;
+        color: rgba(17, 17, 17, 0.38);
+        line-height: 1.7;
+      }
+      .tl-meta strong {
+        color: var(--ink);
+        display: block;
+        font-size: 11px;
+      }
+      .tdiv {
+        width: 1px;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(250, 248, 242, 0.14) 0,
+          rgba(250, 248, 242, 0.14) 8px,
+          transparent 8px,
+          transparent 16px
+        );
+        flex-shrink: 0;
+        position: relative;
+      }
+      .tdiv::before,
+      .tdiv::after {
+        content: "";
+        position: absolute;
+        left: -10px;
+        width: 20px;
+        height: 20px;
+        background: var(--ink);
+        border-radius: 50%;
+        border: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .tdiv::before {
+        top: -10px;
+      }
+      .tdiv::after {
+        bottom: -10px;
+      }
+      .tr2 {
+        flex: 1;
+        padding: 28px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+      .t-ser {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: rgba(250, 248, 242, 0.18);
+      }
+      .t-nlbl {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.26);
+        margin-top: 16px;
+        margin-bottom: 6px;
+      }
+      .t-name {
+        font-family: var(--fd);
+        font-size: 26px;
+        letter-spacing: -0.5px;
+        color: var(--paper);
+        line-height: 1;
+      }
+      .t-bot {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 0.5px solid rgba(250, 248, 242, 0.07);
+        padding-top: 20px;
+        margin-top: 20px;
+      }
+      .t-fl {
+        font-family: var(--fm);
+        font-size: 8px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.2);
+        margin-bottom: 4px;
+      }
+      .t-fv {
+        font-family: var(--fm);
+        font-size: 12px;
+        color: var(--lime);
+        letter-spacing: 0.5px;
+      }
+      .t-wm {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        font-family: var(--fd);
+        font-size: 80px;
+        letter-spacing: -3px;
+        color: rgba(250, 248, 242, 0.02);
+        pointer-events: none;
+        user-select: none;
+      }
+      .tkt-acts {
+        display: flex;
+        gap: 12px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .btn-dl {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 14px 28px;
+        cursor: pointer;
+        flex: 1;
+        transition: background 0.2s;
+      }
+      .btn-dl:hover {
+        background: #ceff1a;
+      }
+      .btn-ano {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: rgba(250, 248, 242, 0.42);
+        border: 0.5px solid rgba(250, 248, 242, 0.1);
+        padding: 14px 28px;
+        cursor: pointer;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .btn-ano:hover {
+        color: var(--paper);
+        border-color: rgba(250, 248, 242, 0.32);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--ink);
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+        padding: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 32px;
+      }
+      .f-logo {
+        font-family: var(--fd);
+        font-size: 28px;
+        letter-spacing: -1px;
+        line-height: 0.9;
+      }
+      .f-logo span {
+        color: var(--lime);
+        display: block;
+      }
+      .f-tag {
+        font-family: var(--fs);
+        font-size: 14px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.28);
+        margin-top: 8px;
+      }
+      .f-pill {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(250, 248, 242, 0.18);
+      }
+      .f-meta {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: rgba(250, 248, 242, 0.16);
+        text-align: right;
+        line-height: 2;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        background: var(--ink);
+        border: 0.5px solid rgba(184, 245, 0, 0.32);
+        color: var(--paper);
+        padding: 16px 24px;
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1px;
+        z-index: 999;
+        transform: translateY(80px);
+        opacity: 0;
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+        max-width: 340px;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .tdot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lime);
+        margin-right: 10px;
+      }
+
+      /* HAMBURGER */
+      .nav-ham {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 101;
+      }
+      .nav-ham span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: var(--paper);
+        transition:
+          transform 0.25s,
+          opacity 0.2s;
+      }
+      .nav-ham.open span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .nav-ham.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-ham.open span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-ham {
+          display: flex;
+        }
+        #nav-cta-desk {
+          display: none;
+        }
+        .nav-links {
+          display: none;
+          position: fixed;
+          top: 56px;
+          left: 0;
+          right: 0;
+          background: var(--ink);
+          border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+          flex-direction: column;
+          padding: 20px;
+          gap: 24px;
+          z-index: 99;
+        }
+        .nav-links.open {
+          display: flex;
+        }
+        section {
+          padding: 60px 20px;
+        }
+        #hero {
+          padding: 80px 20px 40px;
+        }
+        .wm .ln,
+        .wm .lw {
+          font-size: clamp(52px, 16vw, 90px);
+        }
+        .cd {
+          position: static;
+          text-align: left;
+          margin-bottom: 24px;
+        }
+        .ab-grid,
+        .rg-grid,
+        .sp-wrap {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .frow {
+          grid-template-columns: 1fr;
+        }
+        .tkt {
+          flex-direction: column;
+        }
+        .tl {
+          width: 100%;
+        }
+        footer {
+          padding: 40px 20px;
+        }
+        .f-meta {
+          text-align: left;
+        }
+        .sp-frame {
+          aspect-ratio: 1/1;
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .fu {
+        opacity: 0;
+        animation: fadeUp 0.7s ease forwards;
+      }
+      .cd.fu {
+        opacity: 1;
+        animation: none;
+      }
+      .d1 {
+        animation-delay: 0.1s;
+      }
+      .d2 {
+        animation-delay: 0.25s;
+      }
+      .d3 {
+        animation-delay: 0.4s;
+      }
+      .d4 {
+        animation-delay: 0.55s;
+      }
+      .d5 {
+        animation-delay: 0.7s;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-logo">NGWS<span>.</span></div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#speaker">Speaker</a></li>
+        <li><a href="#program">Program</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li>
+          <a href="#register" class="nav-cta" style="width: fit-content"
+            >Register &rarr;</a
+          >
+        </li>
+      </ul>
+      <a href="#register" class="nav-cta" id="nav-cta-desk">Register &rarr;</a>
+      <button
+        class="nav-ham"
+        id="nav-ham"
+        onclick="toggleNav()"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="ticker-wrap" style="margin-top: 56px">
+      <div class="ticker-inner">
+        <span>NGWS 2026</span><span>&middot;</span><span>4 JULY 2026</span
+        ><span>&middot;</span> <span>TCBC AUDITORIUM</span><span>&middot;</span
+        ><span>FAITH &middot; FINANCE &middot; FUTURE</span
+        ><span>&middot;</span> <span>FREE ENTRY</span><span>&middot;</span
+        ><span>REGISTRATION OPEN</span><span>&middot;</span>
+        <span>120 SEATS ONLY</span><span>&middot;</span> <span>NGWS 2026</span
+        ><span>&middot;</span><span>4 JULY 2026</span><span>&middot;</span>
+        <span>TCBC AUDITORIUM</span><span>&middot;</span
+        ><span>FAITH &middot; FINANCE &middot; FUTURE</span
+        ><span>&middot;</span> <span>FREE ENTRY</span><span>&middot;</span
+        ><span>REGISTRATION OPEN</span><span>&middot;</span>
+        <span>120 SEATS ONLY</span><span>&middot;</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="cd fu d1">
+        <div class="cd-lbl">Event countdown</div>
+        <div class="cd-grid">
+          <div class="cd-u">
+            <span class="cd-n" id="cd-d">--</span><span class="cd-s">Days</span>
+          </div>
+          <div class="cd-u">
+            <span class="cd-n" id="cd-h">--</span><span class="cd-s">Hrs</span>
+          </div>
+          <div class="cd-u">
+            <span class="cd-n" id="cd-m">--</span><span class="cd-s">Min</span>
+          </div>
+          <div class="cd-u">
+            <span class="cd-n" id="cd-s2">--</span><span class="cd-s">Sec</span>
+          </div>
+        </div>
+      </div>
+      <p class="hero-lbl fu d1">
+        The Christian Brethren Church presents &middot; MMXXVI
+      </p>
+      <div class="wm fu d2">
+        <span class="ln">NEXT</span><span class="ln">GEN</span>
+        <span class="lw">WEALTH</span><span class="ln">SUMMIT.</span>
+      </div>
+      <div class="hero-meta fu d3">
+        <div class="hmi"><strong>4 JULY 2026</strong>Date</div>
+        <div class="hmi"><strong>09:00 &mdash; 17:00</strong>Time</div>
+        <div class="hmi"><strong>TCBC Auditorium</strong>Venue</div>
+        <div class="hmi"><strong>Free</strong>Entry</div>
+      </div>
+      <p class="hero-tag fu d4">
+        &ldquo;Equipping the next generation for kingdom wealth.&rdquo;
+      </p>
+      <div class="hero-act fu d5">
+        <a href="#register" class="btn-p">Claim your seat &rarr;</a>
+        <a href="#program" class="btn-g">View program</a>
+        <div class="seat-bdg">
+          <span id="seats-hero">120</span> seats remaining
+        </div>
+      </div>
+      <div class="fff">
+        F A I T H &nbsp;&middot;&nbsp; F I N A N C E &nbsp;&middot;&nbsp; F U T
+        U R E
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="sl">01 &middot; About the summit</p>
+      <div class="rule"></div>
+      <div class="ab-grid">
+        <div>
+          <h2 class="ab-h">
+            Equipping<br />the <em>next</em><br />generation.
+          </h2>
+          <div class="ab-body">
+            <p>
+              The NextGen Wealth Summit (NGWS) is The Christian Brethren
+              Church&rsquo;s flagship gathering for working professionals aged
+              25&ndash;45 who are serious about building kingdom-aligned
+              financial futures.
+            </p>
+            <p>
+              NGWS 2026 brings together seasoned practitioners to equip the next
+              generation with the tools, mindset, and spiritual grounding to
+              steward wealth with purpose.
+            </p>
+            <p>
+              This is a free, full-day event. All you need is a registered seat
+              and a hunger to grow. Capacity is strictly 120 &mdash; secure your
+              seat early.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="pillars">
+            <div class="pillar">
+              <span class="p-n">01</span><span class="p-t">FAITH</span
+              ><span class="p-s">Spiritual grounding</span>
+            </div>
+            <div class="pillar">
+              <span class="p-n">02</span><span class="p-t">FINANCE</span
+              ><span class="p-s">Practical mastery</span>
+            </div>
+            <div class="pillar">
+              <span class="p-n">03</span><span class="p-t">FUTURE</span
+              ><span class="p-s">Kingdom vision</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEAKER -->
+    <section id="speaker">
+      <p class="sl-dk">02 &middot; Featured speaker</p>
+      <div class="rule-dk"></div>
+      <div class="sp-wrap">
+        <div class="sp-frame">
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            style="opacity: 0.18"
+          >
+            <circle cx="24" cy="18" r="10" stroke="#111" stroke-width="1.5" />
+            <path
+              d="M8 44c0-8.837 7.163-16 16-16s16 7.163 16 16"
+              stroke="#111"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <p class="sp-frame-lbl">
+            SPEAKER PHOTO<br />GOES HERE<br /><br />Replace this placeholder<br />with
+            an &lt;img&gt; tag
+          </p>
+        </div>
+        <div>
+          <span class="sp-badge">Keynote speaker</span>
+          <h2 class="sp-name">Speaker<br /><em>Name</em></h2>
+          <p class="sp-title">Title &middot; Organisation</p>
+          <div class="sp-rule"></div>
+          <p class="sp-topic">
+            &ldquo;Talk topic placeholder &mdash; Kingdom Finance Principles for
+            the Next Generation.&rdquo;
+          </p>
+          <div class="sp-meta">
+            <div class="spm"><strong>Keynote</strong>Session type</div>
+            <div class="spm"><strong>10:00 AM</strong>Takes the stage</div>
+            <div class="spm"><strong>60 min</strong>+ Q&amp;A</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAM -->
+    <section id="program">
+      <p class="sl">03 &middot; Day program</p>
+      <div class="rule"></div>
+      <h2 class="prog-h">4 July <em>2026</em>.</h2>
+      <table class="pt">
+        <tbody>
+          <tr>
+            <td class="ptime">09:00</td>
+            <td>
+              <div class="ptit">Registration &amp; Welcome</div>
+              <div class="psub">
+                Doors open &middot; Networking &middot; Tea &amp; Coffee
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Open</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">09:30</td>
+            <td>
+              <div class="ptit">Opening Worship &amp; Prayer</div>
+              <div class="psub">Setting the spiritual tone for the day</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Plenary</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">10:00</td>
+            <td>
+              <div class="ptit">Keynote Address</div>
+              <div class="psub">
+                Speaker Name &mdash; Kingdom Finance Principles
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Keynote</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">11:00</td>
+            <td>
+              <div class="ptit">Q &amp; A Session</div>
+              <div class="psub">Open floor with the speaker</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Q&amp;A</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">12:00</td>
+            <td>
+              <div class="ptit">Lunch Break</div>
+              <div class="psub">Fellowship &amp; Networking</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Break</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">13:30</td>
+            <td>
+              <div class="ptit">Workshop</div>
+              <div class="psub">
+                Practical application &mdash; group session
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Workshop</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">15:00</td>
+            <td>
+              <div class="ptit">Panel &amp; Discussion</div>
+              <div class="psub">Community voices on faith &amp; finance</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Panel</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">16:00</td>
+            <td>
+              <div class="ptit">Closing &amp; Commissioning</div>
+              <div class="psub">Prayer &middot; Charge to go and build</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Closing</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">16:45</td>
+            <td>
+              <div class="ptit">Networking Close</div>
+              <div class="psub">
+                Connect with delegates &middot; Event ends 17:00
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Open</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <p class="sl-dk">04 &middot; Frequently asked</p>
+      <div class="rule-dk"></div>
+      <h2 class="faq-h">Questions<br /><em>answered</em>.</h2>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">Is the event free to attend?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            Yes &mdash; completely free. NGWS 2026 is a gift from The Christian
+            Brethren Church to the community. Simply register your seat online.
+            No payment required at any stage.
+          </div>
+        </div>
+      </div>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">Who is this event for?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            NGWS is designed for working professionals aged 25&ndash;45 who want
+            to grow in financial intelligence while staying rooted in their
+            faith. However, anyone with a hunger to learn is welcome.
+          </div>
+        </div>
+      </div>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">Do I need to print my ticket?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            No &mdash; you can present your ticket digitally on your phone or
+            print it. Either works at the door. Your unique QR code will be
+            scanned for check-in.
+          </div>
+        </div>
+      </div>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">Where exactly is the venue?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            The event holds at the TCBC Auditorium. Full address and directions
+            will be sent in your registration confirmation email. Parking is
+            available on-site.
+          </div>
+        </div>
+      </div>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">What should I bring?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            Your ticket (phone or print), a valid ID, and a notebook &mdash;
+            there will be a lot to write down. Lunch is provided. Smart-casual
+            dress is recommended.
+          </div>
+        </div>
+      </div>
+      <div class="fi2" onclick="toggleFaq(this)">
+        <div class="fq">
+          <span class="fqt">How many seats are available?</span
+          ><span class="ftog">+</span>
+        </div>
+        <div class="fa2">
+          <div class="fai">
+            120 seats only. Allocated on a first-come, first-served basis.
+            Registration closes once capacity is reached &mdash; do not wait.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register">
+      <div class="rg-grid">
+        <div>
+          <p class="sl">05 &middot; Secure your seat</p>
+          <div class="rule"></div>
+          <h2 class="rg-h">Register<br /><em>free.</em></h2>
+          <p class="rg-sub">
+            &ldquo;120 seats. First come, first served.&rdquo;
+          </p>
+          <div class="rg-dets">
+            <div class="rd">
+              <span class="rd-l">Date</span
+              ><span class="rd-v">Saturday 4 July 2026</span>
+            </div>
+            <div class="rd">
+              <span class="rd-l">Time</span
+              ><span class="rd-v">09:00 &mdash; 17:00</span>
+            </div>
+            <div class="rd">
+              <span class="rd-l">Venue</span
+              ><span class="rd-v">TCBC Auditorium</span>
+            </div>
+            <div class="rd">
+              <span class="rd-l">Entry</span
+              ><span class="rd-v">Free &mdash; registration required</span>
+            </div>
+            <div class="rd">
+              <span class="rd-l">Seats</span
+              ><span class="rd-v"
+                ><span id="seats-reg">120</span> of 120 remaining</span
+              >
+            </div>
+          </div>
+        </div>
+        <div>
+          <form class="rform" id="reg-form" onsubmit="handleRegister(event)">
+            <div class="frow">
+              <div class="fg">
+                <label class="fl" for="f-fn">First name *</label
+                ><input
+                  class="fi"
+                  id="f-fn"
+                  type="text"
+                  placeholder="John"
+                  required
+                />
+              </div>
+              <div class="fg">
+                <label class="fl" for="f-ln">Last name *</label
+                ><input
+                  class="fi"
+                  id="f-ln"
+                  type="text"
+                  placeholder="Adebayo"
+                  required
+                />
+              </div>
+            </div>
+            <div class="fg">
+              <label class="fl" for="f-em">Email address *</label>
+              <input
+                class="fi"
+                id="f-em"
+                type="email"
+                placeholder="john@example.com"
+                required
+              />
+              <span class="ferr" id="err-email"
+                >Please enter a valid email address.</span
+              >
+            </div>
+            <div class="fg">
+              <label class="fl" for="f-ph">Phone number *</label>
+              <input
+                class="fi"
+                id="f-ph"
+                type="tel"
+                placeholder="+234 800 000 0000"
+                required
+              />
+              <span class="ferr" id="err-phone"
+                >Please enter a valid phone number (min 7 digits).</span
+              >
+            </div>
+            <div class="fg">
+              <label class="fl" for="f-src">How did you hear about NGWS?</label>
+              <select class="fs2" id="f-src">
+                <option value="">Select an option</option>
+                <option value="church">Church announcement</option>
+                <option value="social">Social media</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="friend">Friend or family</option>
+                <option value="flyer">Flyer / Poster</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <span class="ferr" id="err-dup"
+              >This email is already registered. Check your inbox for your
+              ticket.</span
+            >
+            <span class="ferr" id="err-full"
+              >Registration is closed &mdash; all 120 seats have been
+              claimed.</span
+            >
+            <div class="sbanner sb-ok" id="sb-ok">
+              &#8987; Sending your ticket via email&hellip;
+            </div>
+            <div class="sbanner sb-err" id="sb-err">
+              Could not send email automatically. Your ticket is below &mdash;
+              please screenshot or print it.
+            </div>
+            <div class="sc">
+              Seats remaining: <span id="seats-form">120</span> / 120
+            </div>
+            <button type="submit" class="btn-reg" id="btn-reg">
+              Claim my free seat &rarr;
+            </button>
+            <p class="fnote">
+              By registering you agree to receive event communications from
+              TCBC. No spam.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUCCESS / TICKET -->
+    <div id="success">
+      <p class="suc-lbl">&#10003; Registration confirmed</p>
+      <h2 class="suc-h">Your seat is<br />secured.</h2>
+      <p class="suc-sub" id="suc-msg">
+        &ldquo;Your ticket is ready. Check your email &mdash; and see you at
+        NGWS 2026.&rdquo;
+      </p>
+      <div class="tw">
+        <div class="atape">
+          <div class="atape-in">
+            <span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span
+            ><span>&middot;</span><span>ADMIT ONE</span><span>&middot;</span
+            ><span>NGWS 2026</span><span>&middot;</span><span>ADMIT ONE</span
+            ><span>&middot;</span><span>NGWS 2026</span><span>&middot;</span
+            ><span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span
+            ><span>&middot;</span>
+          </div>
+        </div>
+        <div class="tkt" id="ticket-el">
+          <div class="tl">
+            <div>
+              <p class="tl-ev">TCBC presents</p>
+              <div class="tl-wm">
+                NEXT<br />GEN<br /><span class="tw2">WEALTH</span><br />SUMMIT.
+              </div>
+            </div>
+            <div class="tl-meta">
+              <strong>4 July 2026</strong>Date<br /><br />
+              <strong>09:00 &mdash; 17:00</strong>Time<br /><br />
+              <strong>TCBC Auditorium</strong>Venue
+            </div>
+            <div id="qr-box"></div>
+          </div>
+          <div class="tdiv"></div>
+          <div class="tr2">
+            <div>
+              <p class="t-ser" id="t-serial">NGWS-2026-0001</p>
+              <p class="t-nlbl">Registered attendee</p>
+              <p class="t-name" id="t-name">Attendee Name</p>
+            </div>
+            <div class="t-bot">
+              <div>
+                <p class="t-fl">Series</p>
+                <p class="t-fv" id="t-series-no">No. 001/2026</p>
+              </div>
+              <div style="text-align: center">
+                <p class="t-fl">Date</p>
+                <p class="t-fv">04.07.26</p>
+              </div>
+              <div style="text-align: right">
+                <p class="t-fl">Entry</p>
+                <p class="t-fv">FREE</p>
+              </div>
+            </div>
+            <p class="t-wm">NGWS</p>
+          </div>
+        </div>
+        <div class="atape" style="transform: rotate(180deg)">
+          <div class="atape-in" style="animation-direction: reverse">
+            <span>FAITH &middot; FINANCE &middot; FUTURE</span
+            ><span>&middot;</span
+            ><span>FAITH &middot; FINANCE &middot; FUTURE</span
+            ><span>&middot;</span
+            ><span>FAITH &middot; FINANCE &middot; FUTURE</span
+            ><span>&middot;</span
+            ><span>FAITH &middot; FINANCE &middot; FUTURE</span
+            ><span>&middot;</span>
+          </div>
+        </div>
+      </div>
+      <div class="tkt-acts">
+        <button class="btn-dl" onclick="downloadTicket()">
+          &darr; Download / Print ticket
+        </button>
+        <button class="btn-ano" onclick="resetForm()">
+          Register another person
+        </button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <div class="f-logo">NGWS<span>MMXXVI</span></div>
+        <p class="f-tag">
+          &ldquo;Equipping the next generation for kingdom wealth.&rdquo;
+        </p>
+      </div>
+      <div>
+        <p class="f-pill">
+          F A I T H &nbsp;&middot;&nbsp; F I N A N C E &nbsp;&middot;&nbsp; F U
+          T U R E
+        </p>
+      </div>
+      <div class="f-meta">
+        <div>The Christian Brethren Church</div>
+        <div>TCBC &middot; NGWS Vol. 01 / 2026</div>
+        <div>ngws26.tcbc.org</div>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast">
+      <span class="tdot"></span><span id="toast-msg">Done.</span>
+    </div>
+
+    <script>
+      // EmailJS readiness — all three credentials must be configured
+      function ejsReady() {
+        return (
+          typeof emailjs !== "undefined" &&
+          CFG.EMAILJS_PUBLIC_KEY &&
+          !CFG.EMAILJS_PUBLIC_KEY.startsWith("YOUR_") &&
+          CFG.EMAILJS_SERVICE_ID &&
+          !CFG.EMAILJS_SERVICE_ID.startsWith("YOUR_") &&
+          CFG.EMAILJS_TEMPLATE_ID &&
+          !CFG.EMAILJS_TEMPLATE_ID.startsWith("YOUR_")
+        );
+      }
+      (function () {
+        if (ejsReady()) emailjs.init({ publicKey: CFG.EMAILJS_PUBLIC_KEY });
+      })();
+
+      // Seats
+      function getRegs() {
+        try {
+          return JSON.parse(localStorage.getItem("ngws_regs") || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function saveRegs(a) {
+        localStorage.setItem("ngws_regs", JSON.stringify(a));
+      }
+      function seatsLeft() {
+        return CFG.TOTAL_SEATS - getRegs().length;
+      }
+      function refreshSeats() {
+        const n = seatsLeft();
+        ["seats-hero", "seats-reg", "seats-form"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = n;
+        });
+        const btn = document.getElementById("btn-reg");
+        if (btn && n <= 0) {
+          btn.disabled = true;
+          btn.textContent = "Registration closed";
+        }
+      }
+      refreshSeats();
+
+      // Countdown
+      let cdInterval;
+      function tick() {
+        const now = Date.now();
+        const target = new Date(CFG.EVENT_DATE).getTime();
+        const diff = target - now;
+        const pad = (n) => String(n).padStart(2, "0");
+        if (diff <= 0) {
+          document.getElementById("cd-d").textContent = "00";
+          document.getElementById("cd-h").textContent = "00";
+          document.getElementById("cd-m").textContent = "00";
+          document.getElementById("cd-s2").textContent = "00";
+          clearInterval(cdInterval);
+          return;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        document.getElementById("cd-d").textContent = pad(days);
+        document.getElementById("cd-h").textContent = pad(hours);
+        document.getElementById("cd-m").textContent = pad(mins);
+        document.getElementById("cd-s2").textContent = pad(secs);
+      }
+      tick();
+      cdInterval = setInterval(tick, 1000);
+
+      // FAQ
+      function toggleFaq(el) {
+        const was = el.classList.contains("open");
+        document.querySelectorAll(".fi2").forEach((i) => {
+          i.classList.remove("open");
+          i.querySelector(".ftog").textContent = "+";
+        });
+        if (!was) {
+          el.classList.add("open");
+          el.querySelector(".ftog").textContent = "−";
+        }
+      }
+
+      // Serial
+      function genSerial() {
+        const n = String(getRegs().length + 1).padStart(4, "0");
+        const r = Math.random().toString(36).substring(2, 5).toUpperCase();
+        return `NGWS-2026-${n}${r}`;
+      }
+
+      // Register
+      async function handleRegister(e) {
+        e.preventDefault();
+        ["err-email", "err-phone", "err-dup", "err-full"].forEach((id) =>
+          document.getElementById(id).classList.remove("show"),
+        );
+        ["sb-ok", "sb-err"].forEach((id) =>
+          document.getElementById(id).classList.remove("show"),
+        );
+
+        const btn = document.getElementById("btn-reg");
+        const fname = document.getElementById("f-fn").value.trim();
+        const lname = document.getElementById("f-ln").value.trim();
+        const email = document
+          .getElementById("f-em")
+          .value.trim()
+          .toLowerCase();
+        const phone = document.getElementById("f-ph").value.trim();
+        const src = document.getElementById("f-src").value;
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById("err-email").classList.add("show");
+          return;
+        }
+        if (phone.replace(/[\s\-\+\(\)]/g, "").length < 7) {
+          document.getElementById("err-phone").classList.add("show");
+          return;
+        }
+        if (seatsLeft() <= 0) {
+          document.getElementById("err-full").classList.add("show");
+          return;
+        }
+        const regs = getRegs();
+        if (regs.find((r) => r.email === email)) {
+          document.getElementById("err-dup").classList.add("show");
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Processing…";
+
+        const serial = genSerial();
+        const fullName = `${fname} ${lname}`;
+
+        // 1. Save locally
+        regs.push({
+          name: fullName,
+          email,
+          phone,
+          source: src,
+          serial,
+          ts: Date.now(),
+        });
+        saveRegs(regs);
+        refreshSeats();
+
+        // 2. SheetDB — append row to Google Sheet
+        if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
+          fetch(CFG.SHEETDB_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              data: [
+                {
+                  Name: fullName,
+                  Email: email,
+                  Phone: phone,
+                  Source: src,
+                  Serial: serial,
+                  Timestamp: new Date().toISOString(),
+                },
+              ],
+            }),
+          }).catch(() => {});
+        }
+
+        // 3. Render ticket
+        document.getElementById("t-serial").textContent = serial;
+        document.getElementById("t-name").textContent = fullName;
+        const seriesEl = document.getElementById("t-series-no");
+        if (seriesEl)
+          seriesEl.textContent = `No. ${String(regs.length).padStart(3, "0")}/2026`;
+        document.getElementById("suc-msg").textContent =
+          `\u201C${fname}, your seat is confirmed. A copy of your ticket has been sent to ${email}.\u201D`;
+
+        // QR code
+        const qrBox = document.getElementById("qr-box");
+        qrBox.innerHTML = "";
+        try {
+          new QRCode(qrBox, {
+            text: `https://ngws26.tcbc.org/verify?id=${serial}&n=${encodeURIComponent(fullName)}`,
+            width: 80,
+            height: 80,
+            colorDark: "#111111",
+            colorLight: "#FAF8F2",
+            correctLevel: QRCode.CorrectLevel.M,
+          });
+        } catch (_) {
+          qrBox.innerHTML = `<div style="width:80px;height:80px;background:rgba(17,17,17,.08);display:flex;align-items:center;justify-content:center;font-size:7px;color:rgba(17,17,17,.4);text-align:center;padding:4px;word-break:break-all">${escHtml(serial)}</div>`;
+        }
+
+        // 4. EmailJS
+        let emailOk = false;
+        if (ejsReady()) {
+          const sbOk = document.getElementById("sb-ok");
+          sbOk.innerHTML = "&#8987; Sending your ticket via email&hellip;";
+          sbOk.classList.add("show");
+          try {
+            await emailjs.send(
+              CFG.EMAILJS_SERVICE_ID,
+              CFG.EMAILJS_TEMPLATE_ID,
+              { to_name: fullName, to_email: email, serial, phone },
+            );
+            emailOk = true;
+            sbOk.innerHTML = "&#10003; Ticket sent to " + escHtml(email);
+          } catch (err) {
+            console.warn("EmailJS:", err);
+            sbOk.classList.remove("show");
+            document.getElementById("sb-err").classList.add("show");
+          }
+        }
+
+        // 5. Show
+        setTimeout(
+          () => {
+            document.getElementById("success").classList.add("show");
+            document
+              .getElementById("success")
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+            showToast(
+              emailOk
+                ? `\u2713 Ticket emailed to ${email}`
+                : `\u2713 Ticket generated \u2014 ${serial}`,
+            );
+            btn.disabled = false;
+            btn.textContent = "Claim my free seat \u2192";
+          },
+          emailOk ? 300 : 400,
+        );
+      }
+
+      // Download
+      function downloadTicket() {
+        const serial = document.getElementById("t-serial").textContent;
+        const name = document.getElementById("t-name").textContent;
+        if (typeof html2canvas !== "undefined") {
+          html2canvas(document.getElementById("ticket-el"), {
+            backgroundColor: "#111111",
+            scale: 2,
+            useCORS: true,
+          })
+            .then((c) => {
+              const a = document.createElement("a");
+              a.href = c.toDataURL("image/png");
+              a.download = `NGWS-2026-Ticket-${serial}.png`;
+              a.click();
+              showToast("\u2193 Ticket saved as PNG");
+            })
+            .catch(() => printFallback(serial, name));
+        } else {
+          printFallback(serial, name);
+        }
+      }
+      function printFallback(serial, name) {
+        const styles = [
+          "@media print{body{margin:0}}",
+          "body{background:#111;margin:0;padding:40px;font-family:monospace;color:#FAF8F2}",
+          ".wrap{max-width:680px;margin:0 auto}",
+          ".tape{background:#B8F500;padding:7px 0;text-align:center;font-size:9px;font-weight:700;letter-spacing:3px;color:#111}",
+          ".tkt{display:flex;background:#111;border:0.5px solid rgba(255,255,255,.14)}",
+          ".l{background:#FAF8F2;width:200px;flex-shrink:0;padding:24px;color:#111}",
+          ".wm{font-size:20px;line-height:.9;letter-spacing:-1px;font-weight:900}",
+          ".w{color:transparent;-webkit-text-stroke:1.5px #111}",
+          ".lm{font-size:9px;letter-spacing:1px;color:rgba(17,17,17,.4);line-height:1.8;margin-top:12px}",
+          ".lm strong{color:#111;display:block;font-size:11px}",
+          ".r{flex:1;padding:24px 28px}",
+          ".ser{font-size:9px;letter-spacing:2px;color:rgba(250,248,242,.22)}",
+          ".nl{font-size:9px;letter-spacing:2px;color:rgba(250,248,242,.3);margin:14px 0 4px;text-transform:uppercase}",
+          ".nm{font-size:24px;font-weight:900;letter-spacing:-.5px}",
+          ".bot{display:flex;justify-content:space-between;border-top:0.5px solid rgba(255,255,255,.08);padding-top:14px;margin-top:14px}",
+          ".fl{font-size:8px;letter-spacing:2px;color:rgba(250,248,242,.22);margin-bottom:4px;text-transform:uppercase}",
+          ".fv{font-size:11px;color:#B8F500;letter-spacing:.5px}",
+          ".note{font-size:10px;color:rgba(250,248,242,.16);text-align:center;margin-top:20px;letter-spacing:2px}",
+        ].join("");
+
+        const body = [
+          '<div class="wrap">',
+          '<div class="tape">ADMIT ONE · NGWS 2026 · ADMIT ONE · NGWS 2026 · ADMIT ONE · NGWS 2026</div>',
+          '<div class="tkt">',
+          '<div class="l">',
+          '<p style="font-size:9px;letter-spacing:2px;color:rgba(17,17,17,.32);margin-bottom:12px">TCBC PRESENTS</p>',
+          '<div class="wm">NEXT<br>GEN<br><span class="w">WEALTH</span><br>SUMMIT.</div>',
+          '<div class="lm"><strong>4 July 2026</strong>Date<br><br><strong>09:00 – 17:00</strong>Time<br><br><strong>TCBC Auditorium</strong>Venue</div>',
+          "</div>",
+          '<div class="r">',
+          '<p class="ser">' + escHtml(serial) + "</p>",
+          '<p class="nl">Registered attendee</p>',
+          '<p class="nm">' + escHtml(name) + "</p>",
+          '<div class="bot">',
+          '<div><p class="fl">Series</p><p class="fv">No.001/2026</p></div>',
+          '<div><p class="fl">Date</p><p class="fv">04.07.26</p></div>',
+          '<div><p class="fl">Entry</p><p class="fv">FREE</p></div>',
+          "</div></div></div>",
+          '<div class="tape">FAITH · FINANCE · FUTURE · NGWS 2026 · TCBC</div>',
+          '<p class="note">Present this ticket at the door with a valid ID</p>',
+          "</div>",
+        ].join("");
+
+        const html =
+          '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' +
+          styles +
+          "<\/style><\/head><body>" +
+          body +
+          "<\/body><\/html>";
+        const blob = new Blob([html], { type: "text/html" });
+        const blobUrl = URL.createObjectURL(blob);
+        const w = window.open(blobUrl, "_blank");
+        if (w) {
+          w.addEventListener("load", function () {
+            setTimeout(function () {
+              w.print();
+              setTimeout(function () {
+                URL.revokeObjectURL(blobUrl);
+              }, 1000);
+            }, 300);
+          });
+        } else {
+          URL.revokeObjectURL(blobUrl);
+        }
+        showToast("Opening print dialog...");
+      }
+
+      // Reset
+      function resetForm() {
+        document.getElementById("reg-form").reset();
+        document.getElementById("success").classList.remove("show");
+        ["sb-ok", "sb-err"].forEach((id) =>
+          document.getElementById(id).classList.remove("show"),
+        );
+        document
+          .querySelectorAll(".ferr")
+          .forEach((el) => el.classList.remove("show"));
+        document
+          .getElementById("register")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      // HTML escape helper — prevents XSS when inserting user data into innerHTML
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Mobile nav toggle
+      function toggleNav() {
+        const ham = document.getElementById("nav-ham");
+        const links = document.getElementById("nav-links");
+        const open = ham.classList.toggle("open");
+        links.classList.toggle("open", open);
+        ham.setAttribute("aria-expanded", open);
+      }
+      document.querySelectorAll("#nav-links a").forEach((a) =>
+        a.addEventListener("click", () => {
+          document.getElementById("nav-ham").classList.remove("open");
+          document.getElementById("nav-links").classList.remove("open");
+          document
+            .getElementById("nav-ham")
+            .setAttribute("aria-expanded", "false");
+        }),
+      );
+
+      // Toast
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        document.getElementById("toast-msg").textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 4500);
+      }
+    </script>
+  </body>
+</html>
