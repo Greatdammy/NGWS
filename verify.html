@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Verification — NGWS 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=EB+Garamond:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+      :root {
+        --lime: #b8f500;
+        --ink: #111111;
+        --paper: #faf8f2;
+        --deep: #0d7a3a;
+        --stone: #e5e0cb;
+        --fd: "Archivo Black", sans-serif;
+        --fs: "EB Garamond", serif;
+        --fm: "Space Mono", monospace;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--fm);
+        background: var(--ink);
+        color: var(--paper);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      /* ── LOADING ── */
+      #loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .ld-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.28);
+      }
+      .ld-dots { display: flex; gap: 8px; }
+      .ld-dots span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lime);
+        animation: ldBounce 1.2s ease-in-out infinite;
+      }
+      .ld-dots span:nth-child(2) { animation-delay: 0.2s; }
+      .ld-dots span:nth-child(3) { animation-delay: 0.4s; }
+      @keyframes ldBounce {
+        0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+        40%           { opacity: 1;   transform: scale(1);   }
+      }
+
+      /* ── INVALID ── */
+      #invalid-view {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+        max-width: 400px;
+      }
+      .inv-icon {
+        width: 52px;
+        height: 52px;
+        border: 0.5px solid rgba(250, 248, 242, 0.14);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: rgba(250, 248, 242, 0.4);
+        margin-bottom: 4px;
+      }
+      .inv-h {
+        font-family: var(--fd);
+        font-size: 28px;
+        letter-spacing: -1px;
+        line-height: 1;
+      }
+      .inv-p {
+        font-family: var(--fs);
+        font-size: 17px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.42);
+        line-height: 1.65;
+      }
+      .btn-inv {
+        display: inline-block;
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--paper);
+        border: 0.5px solid rgba(250, 248, 242, 0.22);
+        padding: 12px 24px;
+        text-decoration: none;
+        margin-top: 8px;
+        transition: border-color 0.2s;
+      }
+      .btn-inv:hover { border-color: var(--paper); }
+
+      /* ── TICKET VIEW ── */
+      #ticket-view {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 700px;
+      }
+
+      /* Ticker tapes */
+      .atape {
+        background: var(--lime);
+        overflow: hidden;
+        padding: 6px 0;
+        white-space: nowrap;
+        width: 100%;
+      }
+      .atape-in {
+        display: inline-flex;
+        animation: ticker 14s linear infinite;
+      }
+      .atape-in span {
+        font-family: var(--fm);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--ink);
+        padding: 0 20px;
+        text-transform: uppercase;
+      }
+      @keyframes ticker {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      /* Ticket shell */
+      .tkt {
+        background: var(--ink);
+        border-left:  0.5px solid rgba(250, 248, 242, 0.12);
+        border-right: 0.5px solid rgba(250, 248, 242, 0.12);
+        display: flex;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Left stub */
+      .tl {
+        background: var(--paper);
+        width: 210px;
+        flex-shrink: 0;
+        padding: 28px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        color: var(--ink);
+      }
+      .tl-ev {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.32);
+      }
+      .tl-wm {
+        font-family: var(--fd);
+        font-size: 21px;
+        letter-spacing: -1px;
+        line-height: 0.9;
+        color: var(--ink);
+      }
+      .tl-wm .tw2 {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--ink);
+      }
+      .tl-meta {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 1px;
+        color: rgba(17, 17, 17, 0.38);
+        line-height: 1.7;
+      }
+      .tl-meta strong {
+        color: var(--ink);
+        display: block;
+        font-size: 11px;
+      }
+
+      /* Perforation divider */
+      .tdiv {
+        width: 1px;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(250, 248, 242, 0.14) 0,
+          rgba(250, 248, 242, 0.14) 8px,
+          transparent 8px,
+          transparent 16px
+        );
+        flex-shrink: 0;
+        position: relative;
+      }
+      .tdiv::before, .tdiv::after {
+        content: "";
+        position: absolute;
+        left: -10px;
+        width: 20px;
+        height: 20px;
+        background: var(--ink);
+        border-radius: 50%;
+        border: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .tdiv::before { top: -10px; }
+      .tdiv::after  { bottom: -10px; }
+
+      /* Right stub */
+      .tr2 {
+        flex: 1;
+        padding: 28px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      /* Pulsing VALID TICKET badge */
+      .valid-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--fm);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--lime);
+        border: 1px solid rgba(184, 245, 0, 0.4);
+        padding: 7px 14px;
+        width: fit-content;
+        margin-bottom: 20px;
+        animation: badgePulse 2s ease-in-out infinite;
+      }
+      .vb-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lime);
+        flex-shrink: 0;
+        animation: dotBlink 2s ease-in-out infinite;
+      }
+      @keyframes badgePulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(184, 245, 0, 0.28); }
+        50%       { box-shadow: 0 0 0 7px rgba(184, 245, 0, 0);  }
+      }
+      @keyframes dotBlink {
+        0%, 100% { opacity: 1;   }
+        50%       { opacity: 0.3; }
+      }
+
+      .t-ser {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: rgba(250, 248, 242, 0.18);
+      }
+      .t-nlbl {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.26);
+        margin-top: 16px;
+        margin-bottom: 6px;
+      }
+      .t-name {
+        font-family: var(--fd);
+        font-size: 26px;
+        letter-spacing: -0.5px;
+        color: var(--paper);
+        line-height: 1;
+      }
+      .t-bot {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 0.5px solid rgba(250, 248, 242, 0.07);
+        padding-top: 20px;
+        margin-top: 20px;
+      }
+      .t-fl {
+        font-family: var(--fm);
+        font-size: 8px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.2);
+        margin-bottom: 4px;
+      }
+      .t-fv {
+        font-family: var(--fm);
+        font-size: 12px;
+        color: var(--lime);
+        letter-spacing: 0.5px;
+      }
+      .t-wm {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        font-family: var(--fd);
+        font-size: 80px;
+        letter-spacing: -3px;
+        color: rgba(250, 248, 242, 0.02);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* Actions */
+      .tkt-acts {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        margin-top: 20px;
+      }
+      .btn-dl {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 14px 28px;
+        cursor: pointer;
+        flex: 1;
+        transition: background 0.2s;
+      }
+      .btn-dl:hover { background: #ceff1a; }
+      .btn-ngws {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: rgba(250, 248, 242, 0.42);
+        border: 0.5px solid rgba(250, 248, 242, 0.1);
+        padding: 14px 28px;
+        text-decoration: none;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .btn-ngws:hover { color: var(--paper); border-color: rgba(250, 248, 242, 0.32); }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        background: var(--ink);
+        border: 0.5px solid rgba(184, 245, 0, 0.32);
+        color: var(--paper);
+        padding: 16px 24px;
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1px;
+        z-index: 999;
+        transform: translateY(80px);
+        opacity: 0;
+        transition: transform 0.3s, opacity 0.3s;
+        max-width: 340px;
+      }
+      .toast.show { transform: translateY(0); opacity: 1; }
+      .tdot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lime);
+        margin-right: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .tkt { flex-direction: column; }
+        .tl  { width: 100%; }
+        .tdiv { display: none; }
+        .tr2 { padding: 24px; }
+        .t-name { font-size: 20px; }
+        .t-fv { font-size: 10px; }
+        .tkt-acts { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- LOADING -->
+    <div id="loading">
+      <div class="ld-dots"><span></span><span></span><span></span></div>
+      <p class="ld-lbl">Verifying ticket</p>
+    </div>
+
+    <!-- INVALID -->
+    <div id="invalid-view">
+      <div class="inv-icon">&#9888;</div>
+      <h1 class="inv-h">Invalid ticket link.</h1>
+      <p class="inv-p">
+        This link is missing required ticket information. Please scan the QR
+        code on your ticket again, or return to the NGWS website.
+      </p>
+      <a class="btn-inv" href="https://ngws.com.ng/">Go to NGWS &rarr;</a>
+    </div>
+
+    <!-- TICKET VIEW -->
+    <div id="ticket-view">
+      <div class="atape">
+        <div class="atape-in">
+          <span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span><span>&middot;</span>
+          <span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span><span>&middot;</span>
+          <span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span><span>&middot;</span>
+          <span>ADMIT ONE</span><span>&middot;</span><span>NGWS 2026</span><span>&middot;</span>
+        </div>
+      </div>
+
+      <div class="tkt" id="ticket-el">
+
+        <!-- LEFT STUB — paper bg -->
+        <div class="tl">
+          <div>
+            <p class="tl-ev">TCBC presents</p>
+            <div class="tl-wm">
+              NEXT<br />GEN<br /><span class="tw2">WEALTH</span><br />SUMMIT.
+            </div>
+          </div>
+          <div class="tl-meta">
+            <strong>4 July 2026</strong>Date<br /><br />
+            <strong>09:00 &mdash; 17:00</strong>Time<br /><br />
+            <strong>TCBC Auditorium</strong>Venue
+          </div>
+          <div id="qr-box"></div>
+        </div>
+
+        <div class="tdiv"></div>
+
+        <!-- RIGHT STUB — ink bg -->
+        <div class="tr2">
+          <div>
+            <div class="valid-badge">
+              <span class="vb-dot"></span>Valid Ticket
+            </div>
+            <p class="t-ser" id="t-serial">NGWS-2026-0000</p>
+            <p class="t-nlbl">Registered attendee</p>
+            <p class="t-name" id="t-name">Attendee Name</p>
+          </div>
+          <div class="t-bot">
+            <div>
+              <p class="t-fl">Date</p>
+              <p class="t-fv">04.07.26</p>
+            </div>
+            <div>
+              <p class="t-fl">Venue</p>
+              <p class="t-fv">TCBC</p>
+            </div>
+            <div style="text-align:right">
+              <p class="t-fl">Entry</p>
+              <p class="t-fv">FREE</p>
+            </div>
+          </div>
+          <p class="t-wm">NGWS</p>
+        </div>
+
+      </div>
+
+      <div class="atape" style="transform:rotate(180deg)">
+        <div class="atape-in" style="animation-direction:reverse">
+          <span>FAITH &middot; FINANCE &middot; FUTURE</span><span>&middot;</span>
+          <span>FAITH &middot; FINANCE &middot; FUTURE</span><span>&middot;</span>
+          <span>FAITH &middot; FINANCE &middot; FUTURE</span><span>&middot;</span>
+          <span>FAITH &middot; FINANCE &middot; FUTURE</span><span>&middot;</span>
+        </div>
+      </div>
+
+      <div class="tkt-acts">
+        <button class="btn-dl" onclick="downloadTicket()">&darr; Download ticket</button>
+        <a class="btn-ngws" href="https://ngws.com.ng/">Back to NGWS</a>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <span class="tdot"></span><span id="toast-msg">Done.</span>
+    </div>
+
+    <script>
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        document.getElementById("toast-msg").textContent = msg;
+        t.classList.add("show");
+        setTimeout(function () { t.classList.remove("show"); }, 4500);
+      }
+
+      function downloadTicket() {
+        var serial = document.getElementById("t-serial").textContent;
+        if (typeof html2canvas !== "undefined") {
+          html2canvas(document.getElementById("ticket-el"), {
+            backgroundColor: "#111111",
+            scale: 2,
+            useCORS: true,
+          })
+            .then(function (c) {
+              var a = document.createElement("a");
+              a.href = c.toDataURL("image/png");
+              a.download = "NGWS-2026-Ticket-" + serial + ".png";
+              a.click();
+              showToast("↓ Ticket saved as PNG");
+            })
+            .catch(function () {
+              showToast("Could not export — please screenshot the ticket.");
+            });
+        } else {
+          showToast("Could not export — please screenshot the ticket.");
+        }
+      }
+
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var serial = (params.get("id") || "").trim();
+        var name   = (params.get("n")  || "").trim();
+
+        setTimeout(function () {
+          document.getElementById("loading").style.display = "none";
+
+          if (!serial || !name) {
+            document.getElementById("invalid-view").style.display = "flex";
+            return;
+          }
+
+          document.getElementById("t-serial").textContent = serial;
+          document.getElementById("t-name").textContent   = name;
+
+          var verifyUrl =
+            "https://ngws.com.ng/verify?id=" +
+            encodeURIComponent(serial) +
+            "&n=" +
+            encodeURIComponent(name);
+
+          var qrBox = document.getElementById("qr-box");
+          try {
+            new QRCode(qrBox, {
+              text: verifyUrl,
+              width: 80,
+              height: 80,
+              colorDark: "#111111",
+              colorLight: "#FAF8F2",
+              correctLevel: QRCode.CorrectLevel.M,
+            });
+          } catch (_) {
+            qrBox.innerHTML =
+              '<div style="width:80px;height:80px;background:rgba(17,17,17,.08);display:flex;align-items:center;justify-content:center;font-size:7px;color:rgba(17,17,17,.4);text-align:center;padding:4px;word-break:break-all">' +
+              escHtml(serial) +
+              "<\/div>";
+          }
+
+          document.getElementById("ticket-view").style.display = "flex";
+        }, 600);
+      })();
+    </script>
+  </body>
+</html>

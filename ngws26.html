@@ -1449,35 +1449,21 @@
       <p class="sl-dk">02 &middot; Featured speaker</p>
       <div class="rule-dk"></div>
       <div class="sp-wrap">
-        <div class="sp-frame">
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 48 48"
-            fill="none"
-            style="opacity: 0.18"
-          >
-            <circle cx="24" cy="18" r="10" stroke="#111" stroke-width="1.5" />
-            <path
-              d="M8 44c0-8.837 7.163-16 16-16s16 7.163 16 16"
-              stroke="#111"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-          <p class="sp-frame-lbl">
-            SPEAKER PHOTO<br />GOES HERE<br /><br />Replace this placeholder<br />with
-            an &lt;img&gt; tag
-          </p>
+        <div class="sp-frame" style="padding:0;overflow:hidden;">
+          <img
+            src="Speaker .jpeg"
+            alt="Adeolu Akinyemi"
+            style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+          />
         </div>
         <div>
           <span class="sp-badge">Keynote speaker</span>
-          <h2 class="sp-name">Speaker<br /><em>Name</em></h2>
-          <p class="sp-title">Title &middot; Organisation</p>
+          <h2 class="sp-name">Adeolu<br /><em>Akinyemi</em></h2>
+          <p class="sp-title">Leadership &amp; Strategy Consultant &middot; Founder, Coach B &amp; Stewards</p>
           <div class="sp-rule"></div>
           <p class="sp-topic">
-            &ldquo;Talk topic placeholder &mdash; Kingdom Finance Principles for
-            the Next Generation.&rdquo;
+            &ldquo;Building sustainable institutions &mdash; aligning people,
+            strategy, and execution for kingdom impact and lasting excellence.&rdquo;
           </p>
           <div class="sp-meta">
             <div class="spm"><strong>Keynote</strong>Session type</div>
@@ -1522,7 +1508,7 @@
             <td>
               <div class="ptit">Keynote Address</div>
               <div class="psub">
-                Speaker Name &mdash; Kingdom Finance Principles
+                Adeolu Akinyemi &mdash; Kingdom Finance &amp; Leadership
               </div>
             </td>
             <td style="text-align: right; padding: 20px 0">
@@ -1533,7 +1519,7 @@
             <td class="ptime">11:00</td>
             <td>
               <div class="ptit">Q &amp; A Session</div>
-              <div class="psub">Open floor with the speaker</div>
+              <div class="psub">Open floor with Adeolu Akinyemi</div>
             </td>
             <td style="text-align: right; padding: 20px 0">
               <span class="ptag">Q&amp;A</span>
@@ -1906,7 +1892,7 @@
       <div class="f-meta">
         <div>The Christian Brethren Church</div>
         <div>TCBC &middot; NGWS Vol. 01 / 2026</div>
-        <div>ngws26.tcbc.org</div>
+        <div>ngws.com.ng</div>
       </div>
     </footer>
 
@@ -1932,6 +1918,8 @@
       })();
 
       // Seats
+      let globalRegistered = 0;
+
       function getRegs() {
         try {
           return JSON.parse(localStorage.getItem("ngws_regs") || "[]");
@@ -1943,7 +1931,7 @@
         localStorage.setItem("ngws_regs", JSON.stringify(a));
       }
       function seatsLeft() {
-        return CFG.TOTAL_SEATS - getRegs().length;
+        return CFG.TOTAL_SEATS - globalRegistered;
       }
       function refreshSeats() {
         const n = seatsLeft();
@@ -1957,7 +1945,23 @@
           btn.textContent = "Registration closed";
         }
       }
-      refreshSeats();
+
+      async function fetchGlobalCount() {
+        globalRegistered = getRegs().length;
+        refreshSeats();
+        if (!CFG.SHEETDB_API_URL || CFG.SHEETDB_API_URL.includes("YOUR_")) return;
+        try {
+          const res = await fetch(CFG.SHEETDB_API_URL + "/count");
+          if (res.ok) {
+            const data = await res.json();
+            if (typeof data.rows === "number") {
+              globalRegistered = data.rows;
+              refreshSeats();
+            }
+          }
+        } catch (_) {}
+      }
+      fetchGlobalCount();
 
       // Countdown
       let cdInterval;
@@ -2060,6 +2064,7 @@
           ts: Date.now(),
         });
         saveRegs(regs);
+        globalRegistered++;
         refreshSeats();
 
         // 2. SheetDB — append row to Google Sheet
@@ -2096,7 +2101,7 @@
         qrBox.innerHTML = "";
         try {
           new QRCode(qrBox, {
-            text: `https://ngws26.tcbc.org/verify?id=${serial}&n=${encodeURIComponent(fullName)}`,
+            text: `https://ngws.com.ng/verify?id=${serial}&n=${encodeURIComponent(fullName)}`,
             width: 80,
             height: 80,
             colorDark: "#111111",

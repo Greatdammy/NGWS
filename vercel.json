@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/ngws26.html" }
+    { "source": "/", "destination": "/ngws26.html" },
+    { "source": "/verify", "destination": "/verify.html" }
   ]
 }
