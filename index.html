@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NGWS 2026 — NextGen Wealth Summit · 4 July 2026</title>
+    <meta name="description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
+    <meta property="og:title" content="NGWS 2026 — NextGen Wealth Summit" />
+    <meta property="og:description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngws.com.ng/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="NGWS 2026 — NextGen Wealth Summit" />
+    <meta name="twitter:description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -2003,10 +2011,12 @@
         }
       }
 
-      // Serial
+      // Serial — uses SheetDB global count as base so numbers stay roughly sequential
+      // across devices; random 4-char suffix prevents collisions on simultaneous registrations
       function genSerial() {
-        const n = String(getRegs().length + 1).padStart(4, "0");
-        const r = Math.random().toString(36).substring(2, 5).toUpperCase();
+        const base = Math.max(globalRegistered, getRegs().length) + 1;
+        const n = String(base).padStart(4, "0");
+        const r = Math.random().toString(36).substring(2, 6).toUpperCase();
         return `NGWS-2026-${n}${r}`;
       }
 
@@ -2034,7 +2044,7 @@
           document.getElementById("err-email").classList.add("show");
           return;
         }
-        if (phone.replace(/[\s\-\+\(\)]/g, "").length < 7) {
+        if (phone.replace(/\D/g, "").length < 7) {
           document.getElementById("err-phone").classList.add("show");
           return;
         }
@@ -2046,6 +2056,22 @@
         if (regs.find((r) => r.email === email)) {
           document.getElementById("err-dup").classList.add("show");
           return;
+        }
+
+        // Cross-device duplicate check via SheetDB
+        if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
+          try {
+            const dupRes = await fetch(
+              `${CFG.SHEETDB_API_URL}/search?Email=${encodeURIComponent(email)}`
+            );
+            if (dupRes.ok) {
+              const dupData = await dupRes.json();
+              if (Array.isArray(dupData) && dupData.length > 0) {
+                document.getElementById("err-dup").classList.add("show");
+                return;
+              }
+            }
+          } catch (_) {}
         }
 
         btn.disabled = true;
@@ -2084,7 +2110,9 @@
                 },
               ],
             }),
-          }).catch(() => {});
+          }).catch(() => {
+            showToast("⚠ Sheet sync failed — your ticket is saved. Contact the organiser if needed.");
+          });
         }
 
         // 3. Render ticket
@@ -2094,7 +2122,8 @@
         if (seriesEl)
           seriesEl.textContent = `No. ${String(regs.length).padStart(3, "0")}/2026`;
         document.getElementById("suc-msg").textContent =
-          `\u201C${fname}, your seat is confirmed. A copy of your ticket has been sent to ${email}.\u201D`;
+          `\u201C${fname}, your seat is confirmed. Download your ticket below.\u201D`;
+        const sucMsgEl = document.getElementById("suc-msg");
 
         // QR code
         const qrBox = document.getElementById("qr-box");
@@ -2126,6 +2155,7 @@
             );
             emailOk = true;
             sbOk.innerHTML = "&#10003; Ticket sent to " + escHtml(email);
+            sucMsgEl.textContent = `“${fname}, your seat is confirmed. A copy of your ticket has been sent to ${email}.”`;
           } catch (err) {
             console.warn("EmailJS:", err);
             sbOk.classList.remove("show");
