@@ -2118,11 +2118,11 @@
         <li><a href="#program">Program</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#attend-card">Share</a></li>
-        <li>
+        <!-- <li>
           <a href="#register" class="nav-cta" style="width: fit-content"
             >Register &rarr;</a
           >
-        </li>
+        </li> -->
       </ul>
       <a href="#register" class="nav-cta" id="nav-cta-desk">Register &rarr;</a>
       <button
@@ -3239,7 +3239,7 @@
         qrBox.innerHTML = "";
         try {
           new QRCode(qrBox, {
-            text: `https://ngws.com.ng/verify?id=${serial}&n=${encodeURIComponent(fullName)}`,
+            text: `https://ngws.vercel.app/verify?id=${serial}&n=${encodeURIComponent(fullName)}`,
             width: 80,
             height: 80,
             colorDark: "#111111",
