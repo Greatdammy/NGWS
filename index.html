@@ -4,14 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NGWS 2026 — NextGen Wealth Summit · 4 July 2026</title>
-    <meta name="description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
+    <meta
+      name="description"
+      content="Faith · Finance · Future. Join us at TCBC Youth Church on 4 July 2026. Free entry — claim your seat today."
+    />
     <meta property="og:title" content="NGWS 2026 — NextGen Wealth Summit" />
-    <meta property="og:description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
+    <meta
+      property="og:description"
+      content="Faith · Finance · Future. Join us at TCBC Youth Church on 4 July 2026. Free entry — claim your seat today."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ngws.com.ng/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="NGWS 2026 — NextGen Wealth Summit" />
-    <meta name="twitter:description" content="Faith · Finance · Future. Join us at TCBC Auditorium on 4 July 2026. Free entry — claim your seat today." />
+    <meta
+      name="twitter:description"
+      content="Faith · Finance · Future. Join us at TCBC Youth Church on 4 July 2026. Free entry — claim your seat today."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -49,7 +58,7 @@
          <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TICKET NO.</td><td style="color:#B8F500;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">{{serial}}</td></tr>
          <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">DATE</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">Saturday 4 July 2026</td></tr>
          <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TIME</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">09:00 — 17:00</td></tr>
-         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">VENUE</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TCBC Auditorium</td></tr>
+         <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">VENUE</td><td style="padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.06)">TCBC Youth Church</td></tr>
          <tr><td style="color:rgba(250,248,242,0.4);padding:8px 0">ENTRY</td><td style="padding:8px 0">FREE — present this at the door</td></tr>
        </table>
      </div>
@@ -122,13 +131,86 @@
         border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
       }
       .nav-logo {
-        font-family: var(--fd);
-        font-size: 18px;
-        color: var(--paper);
-        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        white-space: nowrap;
       }
-      .nav-logo span {
+      .nl-acronym {
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+      }
+      .nl-ac-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .nl-ac-letter {
+        font-family: var(--fd);
+        font-size: 16px;
         color: var(--lime);
+        line-height: 1;
+      }
+      .nl-ac-word {
+        font-family: var(--fm);
+        font-size: 6px;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.42);
+        white-space: nowrap;
+      }
+      .nl-divider {
+        width: 1px;
+        height: 28px;
+        background: rgba(250, 248, 242, 0.15);
+        display: inline-block;
+        margin: 0 12px;
+        flex-shrink: 0;
+      }
+      .nl-presents {
+        font-family: var(--fm);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.45);
+        font-style: italic;
+        margin-right: 10px;
+      }
+      .nl-event {
+        font-family: var(--fd);
+        font-size: 19px;
+        letter-spacing: -0.5px;
+        color: var(--paper);
+        line-height: 1;
+      }
+      .nl-period {
+        color: var(--lime);
+      }
+      @media (max-width: 768px) {
+        .nl-ac-word {
+          display: none;
+        }
+        .nl-ac-letter {
+          font-size: 14px;
+        }
+        .nl-acronym {
+          gap: 5px;
+        }
+        .nl-divider {
+          height: 20px;
+          margin: 0 8px;
+        }
+      }
+      @media (max-width: 768px) {
+        .nl-foundation {
+          display: none;
+        }
+        .nl-abbr {
+          margin-left: 0;
+        }
       }
       .nav-links {
         display: flex;
@@ -1312,16 +1394,730 @@
       .d5 {
         animation-delay: 0.7s;
       }
+
+      /* ATTEND CARD SECTION */
+      #attend-card {
+        background: var(--ink);
+        border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+      }
+      .ac-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .ac-h {
+        font-family: var(--fd);
+        font-size: clamp(32px, 4vw, 56px);
+        letter-spacing: -2px;
+        line-height: 0.92;
+        margin-bottom: 20px;
+      }
+      .ac-h em {
+        color: var(--lime);
+        font-style: normal;
+      }
+      .ac-sub {
+        font-family: var(--fs);
+        font-size: 17px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.45);
+        margin-bottom: 36px;
+        max-width: 380px;
+        line-height: 1.6;
+      }
+      .ac-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .ac-upload-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--paper);
+        border: 0.5px solid rgba(250, 248, 242, 0.22);
+        padding: 14px 24px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .ac-upload-btn:hover {
+        border-color: var(--lime);
+        color: var(--lime);
+      }
+      .btn-ac-wa {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: #25d366;
+        color: #fff;
+        border: none;
+        padding: 14px 24px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-ac-wa:hover {
+        background: #1ebe5a;
+      }
+      .btn-ac-wa:disabled {
+        background: rgba(37, 211, 102, 0.4);
+        cursor: not-allowed;
+      }
+      .ac-hint {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        color: rgba(250, 248, 242, 0.18);
+        text-transform: uppercase;
+      }
+      .ac-right {
+        display: flex;
+        justify-content: center;
+      }
+      .ac-card {
+        width: 300px;
+        background: var(--ink);
+        border: 0.5px solid rgba(250, 248, 242, 0.1);
+        padding: 24px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .ac-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--lime);
+      }
+      .ac-card-top {
+        font-family: var(--fm);
+        font-size: 7px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.28);
+        text-align: center;
+        margin-bottom: 18px;
+      }
+      .ac-photo-wrap {
+        margin-bottom: 14px;
+      }
+      .ac-photo-ring {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(
+          135deg,
+          var(--lime),
+          rgba(184, 245, 0, 0.25)
+        );
+      }
+      .ac-photo-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(250, 248, 242, 0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .ac-photo-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 50%;
+      }
+      .ac-photo-ph {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .ac-photo-ph span {
+        font-family: var(--fm);
+        font-size: 8px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.2);
+      }
+      .ac-card-name {
+        font-family: var(--fd);
+        font-size: 14px;
+        letter-spacing: -0.3px;
+        color: var(--paper);
+        margin-bottom: 10px;
+        text-align: center;
+        min-height: 17px;
+      }
+      .ac-card-tag {
+        font-family: var(--fm);
+        font-size: 8px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 242, 0.38);
+        margin-bottom: 7px;
+        text-align: center;
+      }
+      .ac-card-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 0.88;
+        margin-bottom: 14px;
+      }
+      .ac-ct-next,
+      .ac-ct-gen,
+      .ac-ct-summit {
+        font-family: var(--fd);
+        font-size: 30px;
+        letter-spacing: -1.5px;
+        color: var(--paper);
+      }
+      .ac-ct-wealth {
+        font-family: var(--fd);
+        font-size: 30px;
+        letter-spacing: -1.5px;
+        color: var(--lime);
+      }
+      .ac-card-rule {
+        width: 36px;
+        height: 0.5px;
+        background: rgba(250, 248, 242, 0.15);
+        margin: 4px 0 10px;
+      }
+      .ac-card-details {
+        font-family: var(--fm);
+        font-size: 8px;
+        letter-spacing: 2px;
+        color: rgba(250, 248, 242, 0.42);
+        text-align: center;
+        margin-bottom: 14px;
+        display: flex;
+        gap: 7px;
+        align-items: center;
+      }
+      .ac-cd-sep {
+        color: var(--lime);
+      }
+      .ac-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border-top: 0.5px solid rgba(250, 248, 242, 0.07);
+        padding-top: 10px;
+      }
+      .ac-cf-fff {
+        font-family: var(--fm);
+        font-size: 6.5px;
+        letter-spacing: 1.5px;
+        color: rgba(250, 248, 242, 0.2);
+      }
+      .ac-cf-aolf {
+        font-family: var(--fd);
+        font-size: 12px;
+        color: var(--lime);
+        letter-spacing: -0.3px;
+      }
+      @media (max-width: 768px) {
+        .ac-wrap {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .ac-right {
+          justify-content: flex-start;
+        }
+      }
+
+      /* Q&A FORM */
+      .qa-form-row td {
+        padding: 0 !important;
+      }
+      .qa-expand {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .qa-expand.open {
+        max-height: 500px;
+      }
+      .qa-inner {
+        padding: 28px 0 32px;
+        border-top: 0.5px solid rgba(184, 245, 0, 0.2);
+      }
+      .qa-lbl {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--lime);
+        margin-bottom: 20px;
+      }
+      .qa-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .qa-ta {
+        resize: vertical;
+        min-height: 90px;
+        font-family: var(--fm);
+        font-size: 14px;
+      }
+      .btn-qa {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 12px 28px;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .btn-qa:hover {
+        background: #ceff1a;
+      }
+      .btn-qa:disabled {
+        background: rgba(184, 245, 0, 0.28);
+        cursor: not-allowed;
+      }
+      .qa-note {
+        font-family: var(--fs);
+        font-size: 13px;
+        font-style: italic;
+        color: rgba(250, 248, 242, 0.3);
+      }
+      .qa-sent {
+        display: none;
+        font-family: var(--fm);
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: var(--lime);
+        margin-top: 16px;
+        border: 0.5px solid rgba(184, 245, 0, 0.28);
+        background: rgba(184, 245, 0, 0.04);
+        padding: 12px 16px;
+      }
+      .qa-sent.show {
+        display: block;
+      }
+
+      /* ── LIGHT MODE ─────────────────────────────────────────────── */
+      @media (prefers-color-scheme: light) {
+        :root {
+          --ink: #111111;
+          --paper: #f5f2ea;
+        }
+
+        body {
+          background: var(--paper);
+          color: var(--ink);
+        }
+
+        /* NAV */
+        nav {
+          background: var(--paper);
+          border-bottom-color: rgba(17, 17, 17, 0.1);
+        }
+        .nl-foundation {
+          color: rgba(17, 17, 17, 0.6);
+        }
+        .nl-presents {
+          color: rgba(17, 17, 17, 0.45);
+        }
+        .nl-event {
+          color: var(--ink);
+        }
+        .nl-divider {
+          background: rgba(17, 17, 17, 0.18);
+        }
+        .nav-links a {
+          color: rgba(17, 17, 17, 0.5);
+        }
+        .nav-links a:hover {
+          color: var(--ink);
+        }
+        .nav-links {
+          background: var(--paper);
+          border-bottom-color: rgba(17, 17, 17, 0.08);
+        }
+        .nav-ham span {
+          background: var(--ink);
+        }
+
+        /* HERO */
+        #hero {
+          background: var(--paper);
+        }
+        .hero-lbl {
+          color: rgba(17, 17, 17, 0.38);
+        }
+        .wm .ln {
+          color: var(--ink);
+        }
+        .hmi {
+          color: rgba(17, 17, 17, 0.45);
+        }
+        .hmi strong {
+          color: var(--ink);
+        }
+        .hero-tag {
+          color: rgba(17, 17, 17, 0.52);
+        }
+        .btn-g {
+          color: var(--ink);
+          border-color: rgba(17, 17, 17, 0.25);
+        }
+        .btn-g:hover {
+          border-color: var(--ink);
+        }
+        .seat-bdg {
+          background: rgba(17, 17, 17, 0.04);
+          border-color: rgba(17, 17, 17, 0.12);
+          color: rgba(17, 17, 17, 0.45);
+        }
+        .cd-lbl {
+          color: rgba(17, 17, 17, 0.32);
+        }
+        .cd-s {
+          color: rgba(17, 17, 17, 0.32);
+        }
+        .fff {
+          color: rgba(17, 17, 17, 0.12);
+        }
+
+        /* ABOUT */
+        #about {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .ab-h {
+          color: var(--ink);
+        }
+        .ab-body {
+          color: rgba(17, 17, 17, 0.65);
+        }
+        .pillar {
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .p-t {
+          color: var(--ink);
+        }
+        .p-s {
+          color: rgba(17, 17, 17, 0.38);
+        }
+        .sl {
+          color: rgba(17, 17, 17, 0.35);
+        }
+
+        /* SPEAKER (already light — slightly darken bg for contrast) */
+        #speaker {
+          background: #e8e2d0;
+        }
+
+        /* PROGRAM */
+        #program {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .prog-h {
+          color: var(--ink);
+        }
+        .pt tr {
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .pt tr:hover {
+          background: rgba(184, 245, 0, 0.08);
+        }
+        .ptit {
+          color: var(--ink);
+        }
+        .psub {
+          color: rgba(17, 17, 17, 0.4);
+        }
+        .ptag {
+          color: var(--deep);
+          border-color: rgba(13, 122, 58, 0.3);
+        }
+
+        /* FAQ (already light) */
+        #faq {
+          background: #e8e2d0;
+        }
+        .faq-h {
+          color: var(--ink);
+        }
+        .fi2 {
+          border-top-color: rgba(17, 17, 17, 0.12);
+        }
+        .fi2:last-child {
+          border-bottom-color: rgba(17, 17, 17, 0.12);
+        }
+        .fqt {
+          color: var(--ink);
+        }
+        .ftog {
+          border-color: rgba(17, 17, 17, 0.2);
+          color: var(--ink);
+        }
+        .fai {
+          color: rgba(17, 17, 17, 0.58);
+        }
+
+        /* REGISTER */
+        #register {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .rg-h {
+          color: var(--ink);
+        }
+        .rg-sub {
+          color: rgba(17, 17, 17, 0.45);
+        }
+        .rd-l {
+          color: var(--deep);
+        }
+        .rd-v {
+          color: rgba(17, 17, 17, 0.72);
+        }
+        .fl {
+          color: rgba(17, 17, 17, 0.38);
+        }
+        .fi,
+        .fs2 {
+          background: rgba(17, 17, 17, 0.04);
+          border-color: rgba(17, 17, 17, 0.14);
+          color: var(--ink);
+        }
+        .fi:focus,
+        .fs2:focus {
+          border-color: var(--deep);
+          background: rgba(13, 122, 58, 0.04);
+        }
+        .fi::placeholder {
+          color: rgba(17, 17, 17, 0.25);
+        }
+        .fs2 option {
+          background: var(--paper);
+          color: var(--ink);
+        }
+        .sc {
+          color: rgba(17, 17, 17, 0.3);
+        }
+        .fnote {
+          color: rgba(17, 17, 17, 0.22);
+        }
+        .sbanner.sb-ok {
+          color: var(--deep);
+          border-color: rgba(13, 122, 58, 0.3);
+          background: rgba(13, 122, 58, 0.05);
+        }
+
+        /* SUCCESS / TICKET */
+        #success {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .suc-h {
+          color: var(--ink);
+        }
+        .suc-sub {
+          color: rgba(17, 17, 17, 0.45);
+        }
+        .tkt {
+          background: #fff;
+          border-color: rgba(17, 17, 17, 0.14);
+        }
+        .tl {
+          background: var(--ink);
+        }
+        .tl-ev {
+          color: rgba(250, 248, 242, 0.32);
+        }
+        .tl-wm {
+          color: var(--paper);
+        }
+        .tl-wm .tw2 {
+          -webkit-text-stroke-color: var(--paper);
+        }
+        .tl-meta {
+          color: rgba(250, 248, 242, 0.42);
+        }
+        .tl-meta strong {
+          color: var(--paper);
+          display: block;
+        }
+        .tdiv {
+          background: repeating-linear-gradient(
+            to bottom,
+            rgba(17, 17, 17, 0.12) 0,
+            rgba(17, 17, 17, 0.12) 8px,
+            transparent 8px,
+            transparent 16px
+          );
+        }
+        .tdiv::before,
+        .tdiv::after {
+          background: var(--paper);
+          border-color: rgba(17, 17, 17, 0.08);
+        }
+        .t-ser {
+          color: rgba(17, 17, 17, 0.22);
+        }
+        .t-nlbl {
+          color: rgba(17, 17, 17, 0.35);
+        }
+        .t-name {
+          color: var(--ink);
+        }
+        .t-bot {
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .t-fl {
+          color: rgba(17, 17, 17, 0.28);
+        }
+        .t-fv {
+          color: var(--deep);
+        }
+        .t-wm {
+          color: rgba(17, 17, 17, 0.025);
+        }
+        .btn-ano {
+          color: rgba(17, 17, 17, 0.5);
+          border-color: rgba(17, 17, 17, 0.15);
+        }
+        .btn-ano:hover {
+          color: var(--ink);
+          border-color: rgba(17, 17, 17, 0.38);
+        }
+
+        /* FOOTER */
+        footer {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .f-logo {
+          color: var(--ink);
+        }
+        .f-logo span {
+          color: var(--lime);
+        }
+        .f-tag {
+          color: rgba(17, 17, 17, 0.35);
+        }
+        .f-pill {
+          color: rgba(17, 17, 17, 0.22);
+        }
+        .f-meta {
+          color: rgba(17, 17, 17, 0.22);
+        }
+
+        /* TOAST */
+        .toast {
+          background: var(--paper);
+          color: var(--ink);
+          border-color: rgba(13, 122, 58, 0.3);
+        }
+
+        /* ATTEND CARD SECTION */
+        #attend-card {
+          background: var(--paper);
+          border-top-color: rgba(17, 17, 17, 0.08);
+        }
+        .ac-sub {
+          color: rgba(17, 17, 17, 0.5);
+        }
+        .ac-upload-btn {
+          color: var(--ink);
+          border-color: rgba(17, 17, 17, 0.22);
+        }
+        .ac-upload-btn:hover {
+          border-color: var(--deep);
+          color: var(--deep);
+        }
+        .ac-hint {
+          color: rgba(17, 17, 17, 0.22);
+        }
+
+        /* Q&A FORM */
+        .qa-inner {
+          border-top-color: rgba(13, 122, 58, 0.2);
+        }
+        .qa-lbl {
+          color: var(--deep);
+        }
+        .qa-note {
+          color: rgba(17, 17, 17, 0.35);
+        }
+        .qa-sent {
+          color: var(--deep);
+          border-color: rgba(13, 122, 58, 0.3);
+          background: rgba(13, 122, 58, 0.05);
+        }
+        .qa-trigger:hover {
+          background: rgba(184, 245, 0, 0.05);
+        }
+      }
     </style>
   </head>
   <body>
     <nav>
-      <div class="nav-logo">NGWS<span>.</span></div>
+      <div class="nav-logo">
+        <div class="nl-acronym">
+          <div class="nl-ac-item">
+            <span class="nl-ac-letter">A</span>
+            <span class="nl-ac-word">Afolabi</span>
+          </div>
+          <div class="nl-ac-item">
+            <span class="nl-ac-letter">O</span>
+            <span class="nl-ac-word">Oladele</span>
+          </div>
+          <div class="nl-ac-item">
+            <span class="nl-ac-letter">L</span>
+            <span class="nl-ac-word">Legacy</span>
+          </div>
+          <div class="nl-ac-item">
+            <span class="nl-ac-letter">F</span>
+            <span class="nl-ac-word">Foundation</span>
+          </div>
+        </div>
+        <span class="nl-divider"></span>
+        <span class="nl-presents">presents</span>
+        <span class="nl-event">NGWS<span class="nl-period">.</span></span>
+      </div>
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#speaker">Speaker</a></li>
         <li><a href="#program">Program</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li><a href="#attend-card">Share</a></li>
         <li>
           <a href="#register" class="nav-cta" style="width: fit-content"
             >Register &rarr;</a
@@ -1377,20 +2173,35 @@
         </div>
       </div>
       <p class="hero-lbl fu d1">
-        The Christian Brethren Church presents &middot; MMXXVI
+        The Afolabi Oladele Legacy Foundation &middot; MMXXVI
       </p>
       <div class="wm fu d2">
         <span class="ln">NEXT</span><span class="ln">GEN</span>
         <span class="lw">WEALTH</span><span class="ln">SUMMIT.</span>
+        <span
+          style="
+            font-family: var(--fm);
+            font-size: clamp(16px, 2vw, 22px);
+            letter-spacing: 9px;
+            color: rgba(250, 248, 242, 0.38);
+            font-weight: 400;
+            display: block;
+            margin-top: 6px;
+            word-spacing: 10px;
+          "
+          >[Investment and Budgeting]</span
+        >
       </div>
       <div class="hero-meta fu d3">
         <div class="hmi"><strong>4 JULY 2026</strong>Date</div>
         <div class="hmi"><strong>09:00 &mdash; 17:00</strong>Time</div>
-        <div class="hmi"><strong>TCBC Auditorium</strong>Venue</div>
+        <div class="hmi">
+          <strong>TCBC Youth Church</strong>16 Brethren Ave, Ejigbo, Lagos
+        </div>
         <div class="hmi"><strong>Free</strong>Entry</div>
       </div>
       <p class="hero-tag fu d4">
-        &ldquo;Equipping the next generation for kingdom wealth.&rdquo;
+        &ldquo;Financial freedom for generation next.&rdquo;
       </p>
       <div class="hero-act fu d5">
         <a href="#register" class="btn-p">Claim your seat &rarr;</a>
@@ -1412,24 +2223,26 @@
       <div class="ab-grid">
         <div>
           <h2 class="ab-h">
-            Equipping<br />the <em>next</em><br />generation.
+            Financial<br />Freedom for<br /><em>Generation</em><br />Next.
           </h2>
           <div class="ab-body">
             <p>
-              The NextGen Wealth Summit (NGWS) is The Christian Brethren
-              Church&rsquo;s flagship gathering for working professionals aged
-              10&ndash;40 who are serious about building kingdom-aligned
-              financial futures.
+              The NextGen Wealth Summit (NGWS) is The Afolabi Oladele Legacy
+              Foundation&rsquo;s flagship gathering for young people. If you are
+              a working professional building a career, an entrepreneur, or a
+              student still finding your footing with a strong desire to create
+              a kingdom-aligned financial future,thenthis is for you.
             </p>
             <p>
-              NGWS 2026 brings together seasoned practitioners to equip the next
-              generation with the tools, mindset, and spiritual grounding to
-              steward wealth with purpose.
+              NGWS 2026 features a seasoned practitioner who will equip you with
+              the tools, mindset, and spiritual grounding to steward wealth with
+              purpose &mdash; meeting you exactly where you are, whether in the
+              boardroom or the classroom.
             </p>
             <p>
-              This is a free, full-day event. All you need is a registered seat
-              and a hunger to grow. Capacity is strictly 120 &mdash; secure your
-              seat early.
+              This is a free, One-day event.<br />
+              All you need is a registered seat and a hunger to grow. <br />
+              Capacity is strictly 120 &mdash; secure your seat early.
             </p>
           </div>
         </div>
@@ -1457,27 +2270,35 @@
       <p class="sl-dk">02 &middot; Featured speaker</p>
       <div class="rule-dk"></div>
       <div class="sp-wrap">
-        <div class="sp-frame" style="padding:0;overflow:hidden;">
+        <div class="sp-frame" style="padding: 0; overflow: hidden">
           <img
             src="Speaker .jpeg"
             alt="Adeolu Akinyemi"
-            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+            style="
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center top;
+              display: block;
+            "
           />
         </div>
         <div>
           <span class="sp-badge">Keynote speaker</span>
           <h2 class="sp-name">Adeolu<br /><em>Akinyemi</em></h2>
-          <p class="sp-title">Leadership &amp; Strategy Consultant &middot; Founder, Coach B &amp; Stewards</p>
+          <p class="sp-title">
+            Leadership &amp; Strategy Consultant &middot; Founder, Coach B &amp;
+            Stewards
+          </p>
           <div class="sp-rule"></div>
           <p class="sp-topic">
-            &ldquo;Building sustainable institutions &mdash; aligning people,
-            strategy, and execution for kingdom impact and lasting excellence.&rdquo;
+            &ldquo; He is passionate about building sustainable institutions,
+            discipling leaders through shared life and values, and helping
+            organisations move from good intentions to durable excellence&rdquo;
           </p>
-          <div class="sp-meta">
-            <div class="spm"><strong>Keynote</strong>Session type</div>
-            <div class="spm"><strong>10:00 AM</strong>Takes the stage</div>
-            <div class="spm"><strong>60 min</strong>+ Q&amp;A</div>
-          </div>
+          <div class="sp-meta"></div>
         </div>
       </div>
     </section>
@@ -1493,9 +2314,7 @@
             <td class="ptime">09:00</td>
             <td>
               <div class="ptit">Registration &amp; Welcome</div>
-              <div class="psub">
-                Doors open &middot; Networking &middot; Tea &amp; Coffee
-              </div>
+              <div class="psub">Doors open &middot; Networking</div>
             </td>
             <td style="text-align: right; padding: 20px 0">
               <span class="ptag">Open</span>
@@ -1512,9 +2331,28 @@
             </td>
           </tr>
           <tr>
+            <td class="ptime">09:50</td>
+            <td>
+              <div class="ptit">Pre-Session Engagement</div>
+              <div class="psub">
+                Warm-up &middot; Icebreaker &middot; Setting the atmosphere
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span
+                class="ptag"
+                style="
+                  border-color: rgba(250, 248, 242, 0.2);
+                  color: rgba(250, 248, 242, 0.5);
+                "
+                >10 min</span
+              >
+            </td>
+          </tr>
+          <tr>
             <td class="ptime">10:00</td>
             <td>
-              <div class="ptit">Keynote Address</div>
+              <div class="ptit">Keynote Address &mdash; Session 1</div>
               <div class="psub">
                 Adeolu Akinyemi &mdash; Kingdom Finance &amp; Leadership
               </div>
@@ -1524,49 +2362,130 @@
             </td>
           </tr>
           <tr>
-            <td class="ptime">11:00</td>
+            <td class="ptime">11:30</td>
             <td>
-              <div class="ptit">Q &amp; A Session</div>
-              <div class="psub">Open floor with Adeolu Akinyemi</div>
-            </td>
-            <td style="text-align: right; padding: 20px 0">
-              <span class="ptag">Q&amp;A</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="ptime">12:00</td>
-            <td>
-              <div class="ptit">Lunch Break</div>
-              <div class="psub">Fellowship &amp; Networking</div>
+              <div class="ptit">Break &amp; Networking</div>
+              <div class="psub">
+                Refreshments &middot; Connect with others &middot; Short recess
+              </div>
             </td>
             <td style="text-align: right; padding: 20px 0">
               <span class="ptag">Break</span>
             </td>
           </tr>
           <tr>
-            <td class="ptime">13:30</td>
+            <td class="ptime">12:00</td>
             <td>
-              <div class="ptit">Workshop</div>
+              <div class="ptit">Game Master Session</div>
               <div class="psub">
-                Practical application &mdash; group session
+                Interactive games &middot; Fun &middot; Engagement
               </div>
             </td>
             <td style="text-align: right; padding: 20px 0">
-              <span class="ptag">Workshop</span>
+              <span
+                class="ptag"
+                style="color: var(--lime); border-color: rgba(184, 245, 0, 0.4)"
+                >Game</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td class="ptime">13:00</td>
+            <td>
+              <div class="ptit">Keynote Address &mdash; Session 2</div>
+              <div class="psub">Adeolu Akinyemi &mdash; Continued</div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Keynote</span>
+            </td>
+          </tr>
+          <tr
+            class="qa-trigger"
+            onclick="toggleQAForm()"
+            style="cursor: pointer"
+          >
+            <td class="ptime">14:30</td>
+            <td>
+              <div class="ptit">Q &amp; A Session</div>
+              <div class="psub">
+                Open floor with Adeolu Akinyemi &mdash;
+                <span style="color: var(--lime)"
+                  >submit your question &darr;</span
+                >
+              </div>
+            </td>
+            <td style="text-align: right; padding: 20px 0">
+              <span class="ptag">Q&amp;A</span>
+            </td>
+          </tr>
+          <tr id="qa-form-row" class="qa-form-row">
+            <td colspan="3" style="padding: 0">
+              <div class="qa-expand" id="qa-expand">
+                <div class="qa-inner">
+                  <p class="qa-lbl">
+                    Got a question for Adeolu Akinyemi? Submit it ahead of time.
+                  </p>
+                  <form id="qa-form" onsubmit="submitQuestion(event)">
+                    <div class="qa-fields">
+                      <input
+                        class="fi"
+                        type="text"
+                        id="qa-name"
+                        placeholder="Your name"
+                        required
+                      />
+                      <textarea
+                        class="fi qa-ta"
+                        id="qa-q"
+                        placeholder="Type your question here&hellip;"
+                        required
+                      ></textarea>
+                    </div>
+                    <div
+                      style="
+                        display: flex;
+                        gap: 12px;
+                        align-items: center;
+                        flex-wrap: wrap;
+                      "
+                    >
+                      <button type="submit" class="btn-qa" id="btn-qa">
+                        Submit question &rarr;
+                      </button>
+                      <span class="qa-note"
+                        >Questions may be selected and read out on the
+                        day.</span
+                      >
+                    </div>
+                  </form>
+                  <div class="qa-sent" id="qa-sent">
+                    &#10003; &nbsp;Question received &mdash; see you on the day!
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
             <td class="ptime">15:00</td>
             <td>
-              <div class="ptit">Panel &amp; Discussion</div>
-              <div class="psub">Community voices on faith &amp; finance</div>
+              <div class="ptit">Post-Session Engagement</div>
+              <div class="psub">
+                Reflection &middot; Group discussion &middot; Key takeaways
+              </div>
             </td>
             <td style="text-align: right; padding: 20px 0">
-              <span class="ptag">Panel</span>
+              <span
+                class="ptag"
+                style="
+                  border-color: rgba(250, 248, 242, 0.2);
+                  color: rgba(250, 248, 242, 0.5);
+                "
+                >10 min</span
+              >
             </td>
           </tr>
           <tr>
-            <td class="ptime">16:00</td>
+            <td class="ptime">15:10</td>
             <td>
               <div class="ptit">Closing &amp; Commissioning</div>
               <div class="psub">Prayer &middot; Charge to go and build</div>
@@ -1576,7 +2495,7 @@
             </td>
           </tr>
           <tr>
-            <td class="ptime">16:45</td>
+            <td class="ptime">16:00</td>
             <td>
               <div class="ptit">Networking Close</div>
               <div class="psub">
@@ -1603,25 +2522,27 @@
         </div>
         <div class="fa2">
           <div class="fai">
-            Yes &mdash; completely free. NGWS 2026 is a gift from The Christian
-            Brethren Church to the community. Simply register your seat online.
-            No payment required at any stage.
+            Yes &mdash; completely free. NGWS 2026 is a gift from The Afolabi
+            Oladele Legacy Foundation to YOU. Simply register to secure your
+            seat. No payment required at any stage.
           </div>
         </div>
       </div>
-      <div class="fi2" onclick="toggleFaq(this)">
+      <!-- <div class="fi2" onclick="toggleFaq(this)">
         <div class="fq">
           <span class="fqt">Who is this event for?</span
           ><span class="ftog">+</span>
         </div>
         <div class="fa2">
           <div class="fai">
-            NGWS is designed for working professionals aged 10&ndash;40 who want
-            to grow in financial intelligence while staying rooted in their
-            faith. However, anyone with a hunger to learn is welcome.
+            NGWS is for young people aged 10&ndash;40 &mdash; whether you are a
+            working professional building a career or a youth church member
+            still finding your footing in school. If you are serious about
+            building a kingdom-aligned financial future and you belong to this
+            generation, this event was made for you. Come with a hunger to grow.
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="fi2" onclick="toggleFaq(this)">
         <div class="fq">
           <span class="fqt">Do I need to print my ticket?</span
@@ -1629,9 +2550,9 @@
         </div>
         <div class="fa2">
           <div class="fai">
-            No &mdash; you can present your ticket digitally on your phone or
-            print it. Either works at the door. Your unique QR code will be
-            scanned for check-in.
+            Not really &mdash; you can present your ticket digitally on your
+            phone or print it. Either works at the door. Your unique QR code
+            will be scanned for check-in.
           </div>
         </div>
       </div>
@@ -1642,9 +2563,8 @@
         </div>
         <div class="fa2">
           <div class="fai">
-            The event holds at the TCBC Auditorium. Full address and directions
-            will be sent in your registration confirmation email. Parking is
-            available on-site.
+            The event holds at the TCBC Youth Church, 16 Brethren Ave, Ejigbo,
+            Lagos. Parking is available on-site.
           </div>
         </div>
       </div>
@@ -1655,9 +2575,8 @@
         </div>
         <div class="fa2">
           <div class="fai">
-            Your ticket (phone or print), a valid ID, and a notebook &mdash;
-            there will be a lot to write down. Lunch is provided. Smart casual
-            outfit recommended.
+            Your ticket (phone or print) and a writting material &mdash; there
+            will be a lot to write down. Smart casual outfit recommended.
           </div>
         </div>
       </div>
@@ -1696,7 +2615,12 @@
             </div>
             <div class="rd">
               <span class="rd-l">Venue</span
-              ><span class="rd-v">TCBC Auditorium</span>
+              ><span class="rd-v"
+                >TCBC Youth Church<br /><span
+                  style="font-size: 15px; color: rgba(250, 248, 242, 0.45)"
+                  >16 Brethren Ave, Ejigbo, Lagos</span
+                ></span
+              >
             </div>
             <div class="rd">
               <span class="rd-l">Entry</span
@@ -1832,7 +2756,8 @@
             <div class="tl-meta">
               <strong>4 July 2026</strong>Date<br /><br />
               <strong>09:00 &mdash; 17:00</strong>Time<br /><br />
-              <strong>TCBC Auditorium</strong>Venue
+              <strong>TCBC Youth Church</strong>Venue<br />16 Brethren Ave,
+              Ejigbo, Lagos
             </div>
             <div id="qr-box"></div>
           </div>
@@ -1883,12 +2808,135 @@
       </div>
     </div>
 
+    <!-- ATTEND CARD -->
+    <section id="attend-card">
+      <p class="sl">06 &middot; Share your attendance</p>
+      <div class="rule"></div>
+      <div class="ac-wrap">
+        <div class="ac-left">
+          <h2 class="ac-h">
+            Generate your<br /><em>I&rsquo;m attending</em><br />card.
+          </h2>
+          <p class="ac-sub">
+            Upload your photo, preview your card, and download it to share on
+            WhatsApp or Instagram.
+          </p>
+          <div class="ac-controls">
+            <label class="ac-upload-btn" for="ac-photo-input">
+              <span id="ac-upload-lbl">+ Upload your photo</span>
+              <input
+                type="file"
+                id="ac-photo-input"
+                accept="image/*"
+                onchange="loadAttendPhoto(event)"
+                style="display: none"
+              />
+            </label>
+            <input
+              class="fi"
+              type="text"
+              id="ac-name-input"
+              placeholder="Your name (optional)"
+              oninput="updateAttendName()"
+              maxlength="40"
+            />
+            <button class="btn-p" onclick="downloadAttendCard()" id="btn-ac-dl">
+              &darr; Download card
+            </button>
+            <button
+              class="btn-ac-wa"
+              onclick="shareToWhatsApp()"
+              id="btn-ac-wa"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style="vertical-align: middle; margin-right: 7px"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                />
+                <path
+                  d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.528 5.845L.057 23.428a.5.5 0 0 0 .609.61l5.71-1.485A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 0 1-5.127-1.415l-.367-.218-3.793.987.998-3.7-.24-.382A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
+                />
+              </svg>
+              Share to WhatsApp
+            </button>
+            <p class="ac-hint">
+              Optimised for Instagram &amp; WhatsApp &middot; square format
+            </p>
+          </div>
+        </div>
+
+        <div class="ac-right">
+          <div class="ac-card" id="ac-card">
+            <!-- top label -->
+            <div class="ac-card-top">
+              <span class="ac-card-org"
+                >Afolabi Oladele Legacy Foundation (AOLF) presents</span
+              >
+            </div>
+            <!-- photo -->
+            <div class="ac-photo-wrap">
+              <div class="ac-photo-ring">
+                <div class="ac-photo-inner" id="ac-photo-inner">
+                  <img id="ac-photo-img" src="" alt="" style="display: none" />
+                  <div class="ac-photo-ph" id="ac-photo-ph">
+                    <svg
+                      width="36"
+                      height="36"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="rgba(250,248,242,0.25)"
+                      stroke-width="1.2"
+                    >
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                    </svg>
+                    <span>Your photo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- name -->
+            <p class="ac-card-name" id="ac-card-name"></p>
+            <!-- headline -->
+            <p class="ac-card-tag">I will be attending</p>
+            <div class="ac-card-title">
+              <span class="ac-ct-next">NEXT</span>
+              <span class="ac-ct-gen">GEN</span>
+              <span class="ac-ct-wealth">WEALTH</span>
+              <span class="ac-ct-summit">SUMMIT.</span>
+            </div>
+            <!-- divider -->
+            <div class="ac-card-rule"></div>
+            <!-- details -->
+            <div class="ac-card-details">
+              <span>4 JULY 2026</span>
+              <span class="ac-cd-sep">&middot;</span>
+              <span>TCBC YOUTH CHURCH</span>
+            </div>
+            <!-- bottom -->
+            <div class="ac-card-footer">
+              <span class="ac-cf-fff"
+                >FAITH &nbsp;&middot;&nbsp; FINANCE &nbsp;&middot;&nbsp;
+                FUTURE</span
+              >
+              <span class="ac-cf-aolf">AOLF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
       <div>
         <div class="f-logo">NGWS<span>MMXXVI</span></div>
         <p class="f-tag">
-          &ldquo;Equipping the next generation for kingdom wealth.&rdquo;
+          &ldquo;Financial freedom for generation next.&rdquo;
         </p>
       </div>
       <div>
@@ -1901,6 +2949,19 @@
         <div>The Christian Brethren Church</div>
         <div>TCBC &middot; NGWS Vol. 01 / 2026</div>
         <div>ngws.com.ng</div>
+        <div
+          style="
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 0.5px solid rgba(255, 255, 255, 0.07);
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(250, 248, 242, 0.18);
+          "
+        >
+          POWERED BY
+          <span style="color: var(--lime); font-weight: 700">AOLF</span>
+        </div>
       </div>
     </footer>
 
@@ -1957,7 +3018,8 @@
       async function fetchGlobalCount() {
         globalRegistered = getRegs().length;
         refreshSeats();
-        if (!CFG.SHEETDB_API_URL || CFG.SHEETDB_API_URL.includes("YOUR_")) return;
+        if (!CFG.SHEETDB_API_URL || CFG.SHEETDB_API_URL.includes("YOUR_"))
+          return;
         try {
           const res = await fetch(CFG.SHEETDB_API_URL + "/count");
           if (res.ok) {
@@ -1997,6 +3059,51 @@
       }
       tick();
       cdInterval = setInterval(tick, 1000);
+
+      // Q&A question form
+      function toggleQAForm() {
+        const expand = document.getElementById("qa-expand");
+        expand.classList.toggle("open");
+        if (expand.classList.contains("open")) {
+          document
+            .getElementById("qa-expand")
+            .scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+
+      async function submitQuestion(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btn-qa");
+        const name = document.getElementById("qa-name").value.trim();
+        const q = document.getElementById("qa-q").value.trim();
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+
+        if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
+          try {
+            await fetch(CFG.SHEETDB_API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                data: [
+                  {
+                    Name: name,
+                    Email: "—",
+                    Phone: "—",
+                    Source: "Q&A Question",
+                    Serial: q,
+                    Timestamp: new Date().toISOString(),
+                  },
+                ],
+              }),
+            });
+          } catch (_) {}
+        }
+
+        document.getElementById("qa-form").style.display = "none";
+        document.getElementById("qa-sent").classList.add("show");
+        showToast("✓ Question submitted — thank you!");
+      }
 
       // FAQ
       function toggleFaq(el) {
@@ -2062,7 +3169,7 @@
         if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
           try {
             const dupRes = await fetch(
-              `${CFG.SHEETDB_API_URL}/search?Email=${encodeURIComponent(email)}`
+              `${CFG.SHEETDB_API_URL}/search?Email=${encodeURIComponent(email)}`,
             );
             if (dupRes.ok) {
               const dupData = await dupRes.json();
@@ -2111,7 +3218,9 @@
               ],
             }),
           }).catch(() => {
-            showToast("⚠ Sheet sync failed — your ticket is saved. Contact the organiser if needed.");
+            showToast(
+              "⚠ Sheet sync failed — your ticket is saved. Contact the organiser if needed.",
+            );
           });
         }
 
@@ -2233,7 +3342,7 @@
           '<div class="l">',
           '<p style="font-size:9px;letter-spacing:2px;color:rgba(17,17,17,.32);margin-bottom:12px">TCBC PRESENTS</p>',
           '<div class="wm">NEXT<br>GEN<br><span class="w">WEALTH</span><br>SUMMIT.</div>',
-          '<div class="lm"><strong>4 July 2026</strong>Date<br><br><strong>09:00 – 17:00</strong>Time<br><br><strong>TCBC Auditorium</strong>Venue</div>',
+          '<div class="lm"><strong>4 July 2026</strong>Date<br><br><strong>09:00 – 17:00</strong>Time<br><br><strong>TCBC Youth Church</strong>Venue</div>',
           "</div>",
           '<div class="r">',
           '<p class="ser">' + escHtml(serial) + "</p>",
@@ -2286,6 +3395,115 @@
         document
           .getElementById("register")
           .scrollIntoView({ behavior: "smooth" });
+      }
+
+      // ATTEND CARD
+      function loadAttendPhoto(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          const img = document.getElementById("ac-photo-img");
+          const ph = document.getElementById("ac-photo-ph");
+          img.src = ev.target.result;
+          img.style.display = "block";
+          ph.style.display = "none";
+          document.getElementById("ac-upload-lbl").textContent =
+            "✓ Photo loaded — change photo";
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function updateAttendName() {
+        const val = document.getElementById("ac-name-input").value.trim();
+        document.getElementById("ac-card-name").textContent = val;
+      }
+
+      async function shareToWhatsApp() {
+        const card = document.getElementById("ac-card");
+        const btn = document.getElementById("btn-ac-wa");
+        btn.disabled = true;
+        btn.textContent = "Preparing…";
+
+        const name = document.getElementById("ac-name-input").value.trim();
+        const msg =
+          (name ? `${name} will be` : "I will be") +
+          " attending NGWS 2026 — NextGen Wealth Summit! 📅 4 July 2026 | TCBC Youth Church.\n\nFaith · Finance · Future\n\nRegister free 👉 ngws.com.ng";
+
+        if (typeof html2canvas !== "undefined") {
+          try {
+            const canvas = await html2canvas(card, {
+              backgroundColor: "#111111",
+              scale: 3,
+              useCORS: true,
+              allowTaint: true,
+            });
+            canvas.toBlob(async function (blob) {
+              const file = new File([blob], "NGWS-2026-Attending.png", {
+                type: "image/png",
+              });
+              if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                  await navigator.share({
+                    files: [file],
+                    title: "I'm attending NGWS 2026!",
+                    text: msg,
+                  });
+                  showToast("✓ Shared!");
+                } catch (err) {
+                  if (err.name !== "AbortError") waFallback(msg);
+                }
+              } else {
+                waFallback(msg);
+              }
+              btn.textContent = "Share to WhatsApp";
+              btn.disabled = false;
+            }, "image/png");
+          } catch (_) {
+            waFallback(msg);
+            btn.textContent = "Share to WhatsApp";
+            btn.disabled = false;
+          }
+        } else {
+          waFallback(msg);
+          btn.textContent = "Share to WhatsApp";
+          btn.disabled = false;
+        }
+      }
+
+      function waFallback(msg) {
+        window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+      }
+
+      function downloadAttendCard() {
+        const card = document.getElementById("ac-card");
+        if (typeof html2canvas === "undefined") {
+          showToast("Download library not loaded — try refreshing.");
+          return;
+        }
+        const btn = document.getElementById("btn-ac-dl");
+        btn.textContent = "Generating…";
+        btn.disabled = true;
+        html2canvas(card, {
+          backgroundColor: "#111111",
+          scale: 3,
+          useCORS: true,
+          allowTaint: true,
+        })
+          .then(function (canvas) {
+            const a = document.createElement("a");
+            a.href = canvas.toDataURL("image/png");
+            a.download = "NGWS-2026-Attending.png";
+            a.click();
+            showToast("✓ Card saved — share it!");
+            btn.textContent = "↓ Download card";
+            btn.disabled = false;
+          })
+          .catch(function () {
+            showToast("Could not generate card. Try again.");
+            btn.textContent = "↓ Download card";
+            btn.disabled = false;
+          });
       }
 
       // HTML escape helper — prevents XSS when inserting user data into innerHTML
