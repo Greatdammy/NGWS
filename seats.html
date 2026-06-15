@@ -523,12 +523,25 @@
         try {
           if (!seatList.length) await loadSeats();
 
-          const match = seatList.find(rec =>
-            rec.Email.trim().toLowerCase() === q ||
-            rec.Name.trim().toLowerCase().includes(q) ||
-            rec.Serial.trim().toLowerCase() === q ||
-            rec.Phone.trim().replace(/\D/g, "").endsWith(q.replace(/\D/g, ""))
-          );
+          // 1. Exact email match
+          // 2. Exact serial match
+          // 3. Phone match — only when query is purely numeric (min 7 digits)
+          // 4. Name match — every word in the query must appear in the name
+          const qDigits = q.replace(/\D/g, "");
+          const qWords = q.split(/\s+/).filter(Boolean);
+          const match = seatList.find(rec => {
+            if (rec.Email.trim().toLowerCase() === q) return true;
+            if (rec.Serial.trim().toLowerCase() === q) return true;
+            if (qDigits.length >= 7 && /^\d+$/.test(qDigits)) {
+              const p = rec.Phone.trim().replace(/\D/g, "");
+              if (p === qDigits || p.endsWith(qDigits)) return true;
+            }
+            if (qWords.length >= 1) {
+              const name = rec.Name.trim().toLowerCase();
+              if (qWords.every(w => name.includes(w.toLowerCase()))) return true;
+            }
+            return false;
+          });
 
           resultWrap.classList.add("show");
           if (match) {
