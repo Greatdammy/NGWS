@@ -1,1 +1,4 @@
 .vercel
+node_modules
+send-seats.js
+email-preview.html

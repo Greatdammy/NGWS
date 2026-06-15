@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NGWS 2026 — Your Seat is Confirmed</title>
+</head>
+<body style="margin:0;padding:0;background-color:#e8e4d8;font-family:'Courier New',Courier,monospace">
+
+<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#e8e4d8" style="background-color:#e8e4d8">
+<tr><td align="center" style="padding:32px 16px">
+
+  <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="max-width:600px;background-color:#ffffff;border:1px solid #d0cbb8">
+
+    <!-- LIME TOP TAPE -->
+    <tr>
+      <td bgcolor="#B8F500" style="background-color:#B8F500;padding:10px 0;text-align:center;font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:4px;color:#111111">
+        ADMIT ONE &nbsp;&middot;&nbsp; NGWS 2026 &nbsp;&middot;&nbsp; ADMIT ONE &nbsp;&middot;&nbsp; NGWS 2026 &nbsp;&middot;&nbsp; ADMIT ONE
+      </td>
+    </tr>
+
+    <!-- HEADER — cream bg, dark text (works in all clients) -->
+    <tr>
+      <td bgcolor="#f5f1e4" style="background-color:#f5f1e4;padding:32px 36px 28px;border-bottom:3px solid #B8F500">
+        <p style="font-size:9px;letter-spacing:3px;color:#7a7a6a;margin:0 0 20px 0;text-transform:uppercase;font-family:'Courier New',Courier,monospace">
+          Seat Confirmed &nbsp;&middot;&nbsp; NGWS 2026
+        </p>
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:44px;margin:0;letter-spacing:-2px;line-height:0.88;color:#111111">NEXT GEN</p>
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:44px;margin:0;letter-spacing:-2px;line-height:0.88;color:#5a8a00">WEALTH</p>
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:44px;margin:0;letter-spacing:-2px;line-height:0.88;color:#111111">SUMMIT.</p>
+        <p style="font-size:10px;letter-spacing:2px;color:#999888;margin:18px 0 0 0;font-family:'Courier New',Courier,monospace">
+          THE CHRISTIAN BRETHREN CHURCH
+        </p>
+      </td>
+    </tr>
+
+    <!-- GREETING -->
+    <tr>
+      <td bgcolor="#ffffff" style="background-color:#ffffff;padding:36px 36px 0">
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:19px;color:#111111;margin:0 0 10px 0;line-height:1.5">
+          Hi <strong style="color:#111111">{{to_name}}</strong>,
+        </p>
+        <p style="font-family:Georgia,'Times New Roman',serif;font-size:17px;color:#444444;margin:0 0 32px 0;line-height:1.75">
+          We can't wait to have you at NGWS 2026. Your seat is officially
+          confirmed — this is going to be a day of faith, financial clarity,
+          and vision you won't forget. Come ready to receive.
+        </p>
+      </td>
+    </tr>
+
+    <!-- SEAT NUMBER BOX -->
+    <tr>
+      <td bgcolor="#ffffff" style="background-color:#ffffff;padding:0 36px 32px">
+        <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#111111" style="background-color:#111111;border:3px solid #B8F500">
+          <tr>
+            <td style="padding:32px 24px;text-align:center">
+              <p style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#B8F500;margin:0 0 14px 0;font-family:'Courier New',Courier,monospace">
+                Your Official Seat Number
+              </p>
+              <p style="font-family:'Courier New',Courier,monospace;font-size:80px;font-weight:700;color:#B8F500;letter-spacing:-3px;line-height:1;margin:0 0 10px 0">
+                {{seat_number}}
+              </p>
+              <p style="font-size:10px;letter-spacing:3px;font-family:'Courier New',Courier,monospace;color:#ffffff;margin:0">
+                OF 120 SEATS
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- EVENT DETAILS TABLE -->
+    <tr>
+      <td bgcolor="#ffffff" style="background-color:#ffffff;padding:0 36px 32px">
+        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #ddd8c8">
+
+          <tr>
+            <td bgcolor="#f5f1e4" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;width:38%;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Attendee</td>
+            <td bgcolor="#f5f1e4" style="font-size:13px;color:#111111;padding:13px 20px;font-weight:700;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">{{to_name}}</td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#111111" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#B8F500;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #333">Seat No.</td>
+            <td bgcolor="#111111" style="font-size:18px;color:#B8F500;padding:13px 20px;font-weight:700;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #333">{{seat_number}} <span style="font-size:12px;color:#666;font-weight:400">/ 120</span></td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#f5f1e4" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Ticket No.</td>
+            <td bgcolor="#f5f1e4" style="font-size:11px;color:#777766;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">{{serial}}</td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#ffffff" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Date</td>
+            <td bgcolor="#ffffff" style="font-size:13px;color:#111111;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Saturday, 4 July 2026</td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#f5f1e4" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Time</td>
+            <td bgcolor="#f5f1e4" style="font-size:13px;color:#111111;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">9:00 AM &mdash; 5:00 PM</td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#ffffff" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">Venue</td>
+            <td bgcolor="#ffffff" style="font-size:13px;color:#111111;padding:13px 20px;font-family:'Courier New',Courier,monospace;border-bottom:1px solid #e0dac8">
+              TCBC Youth Church<br />
+              <span style="font-size:11px;color:#999888">16 Brethren Ave, Ejigbo, Lagos</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td bgcolor="#f5f1e4" style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888878;padding:13px 20px;font-family:'Courier New',Courier,monospace">Entry</td>
+            <td bgcolor="#f5f1e4" style="font-size:13px;color:#111111;padding:13px 20px;font-family:'Courier New',Courier,monospace">FREE &mdash; present this email at the door</td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+
+    <!-- CTA BUTTON -->
+    <tr>
+      <td bgcolor="#ffffff" style="background-color:#ffffff;padding:0 36px 36px;text-align:center">
+        <a href="https://ngws.com.ng/seats" style="display:inline-block;font-family:'Courier New',Courier,monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background-color:#111111;color:#B8F500;padding:16px 40px;text-decoration:none">
+          Verify your seat online &rarr;
+        </a>
+        <p style="font-size:9px;letter-spacing:1px;color:#aaa890;margin:10px 0 0 0;font-family:'Courier New',Courier,monospace">
+          ngws.com.ng/seats
+        </p>
+      </td>
+    </tr>
+
+    <!-- SCRIPTURE -->
+    <tr>
+      <td bgcolor="#ffffff" style="background-color:#ffffff;padding:0 36px 40px">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="4" bgcolor="#B8F500" style="background-color:#B8F500">&nbsp;</td>
+            <td bgcolor="#f5f1e4" style="background-color:#f5f1e4;padding:18px 20px">
+              <p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;color:#554433;margin:0 0 10px 0;font-style:italic;line-height:1.75">
+                &ldquo;For the Lord your God will bless you in all your harvest
+                and in all the work of your hands, and your joy will be complete.&rdquo;
+              </p>
+              <p style="font-size:9px;letter-spacing:2px;color:#aaa890;margin:0;font-family:'Courier New',Courier,monospace">
+                &mdash; DEUTERONOMY 16:15
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- LIME BOTTOM TAPE -->
+    <tr>
+      <td bgcolor="#B8F500" style="background-color:#B8F500;padding:10px 0;text-align:center;font-family:'Courier New',Courier,monospace;font-size:9px;font-weight:700;letter-spacing:4px;color:#111111">
+        FAITH &nbsp;&middot;&nbsp; FINANCE &nbsp;&middot;&nbsp; FUTURE &nbsp;&middot;&nbsp; NGWS 2026 &nbsp;&middot;&nbsp; TCBC
+      </td>
+    </tr>
+
+    <!-- DARK FOOTER -->
+    <tr>
+      <td bgcolor="#111111" style="background-color:#111111;padding:18px 36px;text-align:center">
+        <p style="font-size:9px;letter-spacing:2px;color:#555548;margin:0;font-family:'Courier New',Courier,monospace">
+          FAITH &nbsp;&middot;&nbsp; FINANCE &nbsp;&middot;&nbsp; FUTURE &nbsp;&middot;&nbsp; NGWS 2026 &nbsp;&middot;&nbsp; TCBC
+        </p>
+      </td>
+    </tr>
+
+  </table>
+
+</td></tr>
+</table>
+
+</body>
+</html>
