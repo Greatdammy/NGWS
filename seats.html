@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Your Seat — NGWS 2026</title>
+    <meta name="description" content="Look up your official seat number for NGWS 2026 — NextGen Wealth Summit, 4 July 2026." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=EB+Garamond:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lime: #b8f500;
+        --ink: #111111;
+        --paper: #faf8f2;
+        --deep: #0d7a3a;
+        --stone: #e5e0cb;
+        --fm: "Space Mono", monospace;
+        --fd: "Archivo Black", sans-serif;
+        --fs: "EB Garamond", serif;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: var(--fm);
+        background: var(--ink);
+        color: var(--paper);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+        height: 56px;
+        border-bottom: 0.5px solid rgba(255,255,255,0.08);
+      }
+      .nav-logo {
+        font-family: var(--fd);
+        font-size: 18px;
+        letter-spacing: -0.5px;
+        color: var(--paper);
+        text-decoration: none;
+      }
+      .nav-logo span { color: var(--lime); }
+      .nav-back {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(250,248,242,0.4);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-back:hover { color: var(--paper); }
+
+      /* HERO */
+      .page-hero {
+        padding: 80px 40px 60px;
+        max-width: 680px;
+      }
+      .page-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250,248,242,0.28);
+        margin-bottom: 16px;
+      }
+      .page-h {
+        font-family: var(--fd);
+        font-size: clamp(36px, 6vw, 64px);
+        letter-spacing: -2px;
+        line-height: 0.9;
+        margin-bottom: 20px;
+      }
+      .page-h em { color: var(--lime); font-style: normal; }
+      .page-sub {
+        font-family: var(--fs);
+        font-size: 18px;
+        font-style: italic;
+        color: rgba(250,248,242,0.45);
+        line-height: 1.6;
+        max-width: 480px;
+      }
+
+      /* SEARCH */
+      .search-wrap {
+        padding: 0 40px 80px;
+        max-width: 680px;
+      }
+      .search-box {
+        display: flex;
+        gap: 0;
+        margin-bottom: 12px;
+      }
+      .search-input {
+        flex: 1;
+        font-family: var(--fm);
+        font-size: 14px;
+        background: rgba(250,248,242,0.04);
+        border: 0.5px solid rgba(250,248,242,0.14);
+        border-right: none;
+        color: var(--paper);
+        padding: 16px 20px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+        border-radius: 0;
+        -webkit-appearance: none;
+      }
+      .search-input:focus {
+        border-color: var(--lime);
+        background: rgba(184,245,0,0.04);
+      }
+      .search-input::placeholder { color: rgba(250,248,242,0.2); }
+      .search-btn {
+        font-family: var(--fm);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: var(--lime);
+        color: var(--ink);
+        border: none;
+        padding: 16px 28px;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .search-btn:hover { background: #ceff1a; }
+      .search-btn:disabled { background: rgba(184,245,0,0.3); cursor: not-allowed; }
+      .search-hint {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: rgba(250,248,242,0.18);
+      }
+
+      /* RESULT */
+      .result-wrap { margin-top: 40px; display: none; }
+      .result-wrap.show { display: block; }
+
+      /* FOUND */
+      .result-found {
+        border: 0.5px solid rgba(184,245,0,0.2);
+        background: rgba(184,245,0,0.03);
+        padding: 32px;
+        display: none;
+      }
+      .result-found.show { display: block; }
+      .res-tag {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--lime);
+        margin-bottom: 24px;
+      }
+      .res-name {
+        font-family: var(--fd);
+        font-size: clamp(24px, 4vw, 40px);
+        letter-spacing: -1px;
+        line-height: 1;
+        margin-bottom: 32px;
+      }
+      .res-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: rgba(250,248,242,0.06);
+        border: 0.5px solid rgba(250,248,242,0.06);
+        margin-bottom: 28px;
+      }
+      .res-cell {
+        background: var(--ink);
+        padding: 20px 24px;
+      }
+      .res-cell-lbl {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250,248,242,0.28);
+        margin-bottom: 8px;
+      }
+      .res-cell-val {
+        font-family: var(--fm);
+        font-size: 14px;
+        color: var(--paper);
+      }
+      .res-cell-val.highlight {
+        font-family: var(--fd);
+        font-size: 32px;
+        letter-spacing: -1px;
+        color: var(--lime);
+        line-height: 1;
+      }
+      .res-note {
+        font-family: var(--fs);
+        font-size: 15px;
+        font-style: italic;
+        color: rgba(250,248,242,0.38);
+        line-height: 1.6;
+      }
+
+      /* NOT FOUND */
+      .result-notfound {
+        border: 0.5px solid rgba(255,128,128,0.2);
+        background: rgba(255,128,128,0.03);
+        padding: 28px 32px;
+        display: none;
+      }
+      .result-notfound.show { display: block; }
+      .nf-tag {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ff8080;
+        margin-bottom: 12px;
+      }
+      .nf-msg {
+        font-family: var(--fs);
+        font-size: 17px;
+        font-style: italic;
+        color: rgba(250,248,242,0.5);
+        line-height: 1.6;
+      }
+
+      /* DIVIDER */
+      .divider {
+        width: 100%;
+        height: 0.5px;
+        background: rgba(255,255,255,0.07);
+        margin: 60px 40px 0;
+        width: calc(100% - 80px);
+      }
+
+      /* ADMIN TABLE */
+      .admin-wrap {
+        padding: 60px 40px 80px;
+      }
+      .admin-toggle {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: transparent;
+        color: rgba(250,248,242,0.3);
+        border: 0.5px solid rgba(250,248,242,0.1);
+        padding: 12px 24px;
+        cursor: pointer;
+        transition: color 0.2s, border-color 0.2s;
+        margin-bottom: 32px;
+      }
+      .admin-toggle:hover { color: var(--paper); border-color: rgba(250,248,242,0.3); }
+      .admin-section { display: none; }
+      .admin-section.show { display: block; }
+      .admin-lbl {
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(250,248,242,0.28);
+        margin-bottom: 24px;
+      }
+      .seat-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+      .seat-table th {
+        font-family: var(--fm);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250,248,242,0.3);
+        text-align: left;
+        padding: 10px 16px;
+        border-bottom: 0.5px solid rgba(255,255,255,0.08);
+      }
+      .seat-table td {
+        font-family: var(--fm);
+        font-size: 12px;
+        color: rgba(250,248,242,0.7);
+        padding: 12px 16px;
+        border-bottom: 0.5px solid rgba(255,255,255,0.04);
+        vertical-align: middle;
+      }
+      .seat-table tr:hover td { background: rgba(184,245,0,0.02); }
+      .seat-num {
+        font-family: var(--fd);
+        font-size: 15px;
+        color: var(--lime);
+        letter-spacing: -0.5px;
+      }
+      .seat-name { color: var(--paper); }
+      .btn-print {
+        font-family: var(--fm);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--paper);
+        border: 0.5px solid rgba(250,248,242,0.2);
+        padding: 12px 24px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+        margin-top: 24px;
+      }
+      .btn-print:hover { border-color: var(--paper); }
+
+      /* LOADING */
+      .loading {
+        font-family: var(--fm);
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: rgba(250,248,242,0.28);
+        text-transform: uppercase;
+        padding: 20px 0;
+        display: none;
+      }
+      .loading.show { display: block; }
+
+      /* FOOTER */
+      .page-footer {
+        margin-top: auto;
+        padding: 32px 40px;
+        border-top: 0.5px solid rgba(255,255,255,0.07);
+        font-family: var(--fm);
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: rgba(250,248,242,0.18);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 600px) {
+        nav, .page-hero, .search-wrap, .admin-wrap { padding-left: 20px; padding-right: 20px; }
+        .divider { margin-left: 20px; width: calc(100% - 40px); }
+        .res-grid { grid-template-columns: 1fr; }
+        .search-box { flex-direction: column; }
+        .search-input { border-right: 0.5px solid rgba(250,248,242,0.14); border-bottom: none; }
+        .seat-table { font-size: 11px; }
+        .seat-table td, .seat-table th { padding: 10px 8px; }
+      }
+
+      @media print {
+        nav, .page-hero, .search-wrap, .admin-toggle, .page-footer, .divider { display: none !important; }
+        .admin-section { display: block !important; }
+        body { background: #fff; color: #111; }
+        .admin-lbl { color: #555; }
+        .seat-table th { color: #555; border-bottom-color: #ccc; }
+        .seat-table td { color: #333; border-bottom-color: #eee; }
+        .seat-num { color: #0d7a3a; }
+        .seat-name { color: #111; }
+        .btn-print { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <a class="nav-logo" href="/">NGWS<span>.</span></a>
+      <a class="nav-back" href="/">&larr; Back to site</a>
+    </nav>
+
+    <div class="page-hero">
+      <p class="page-lbl">NGWS 2026 &middot; Seat Assignment</p>
+      <h1 class="page-h">Find your<br /><em>seat.</em></h1>
+      <p class="page-sub">
+        Enter your name, email, phone number, or ticket serial to look up your official seat number.
+      </p>
+    </div>
+
+    <div class="search-wrap">
+      <div class="search-box">
+        <input
+          class="search-input"
+          id="search-input"
+          type="text"
+          placeholder="e.g. John Adebayo  /  john@email.com  /  NGWS-2026-0030…"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter') lookupSeat()"
+        />
+        <button class="search-btn" id="search-btn" onclick="lookupSeat()">Find Seat &rarr;</button>
+      </div>
+      <p class="search-hint">Search by full name, email address, phone number, or ticket serial</p>
+
+      <div class="loading" id="loading">Looking up your seat&hellip;</div>
+
+      <div class="result-wrap" id="result-wrap">
+        <div class="result-found" id="result-found">
+          <p class="res-tag">&#10003; Seat confirmed</p>
+          <p class="res-name" id="res-name"></p>
+          <div class="res-grid">
+            <div class="res-cell">
+              <p class="res-cell-lbl">Official Seat No.</p>
+              <p class="res-cell-val highlight" id="res-seat"></p>
+            </div>
+            <div class="res-cell">
+              <p class="res-cell-lbl">Total Seats</p>
+              <p class="res-cell-val highlight" style="color:rgba(250,248,242,0.35)">/ 120</p>
+            </div>
+            <div class="res-cell">
+              <p class="res-cell-lbl">Ticket Serial</p>
+              <p class="res-cell-val" id="res-serial"></p>
+            </div>
+            <div class="res-cell">
+              <p class="res-cell-lbl">Registered</p>
+              <p class="res-cell-val" id="res-date"></p>
+            </div>
+          </div>
+          <p class="res-note">
+            Present this seat number at the door on 4 July 2026 &mdash; TCBC Youth Church.
+            Your ticket serial remains valid for entry.
+          </p>
+        </div>
+
+        <div class="result-notfound" id="result-notfound">
+          <p class="nf-tag">&#9888; Not found</p>
+          <p class="nf-msg">
+            No registration found for that search. Try your email address or phone number.
+            If you believe this is an error, contact the organiser.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="admin-wrap">
+      <button class="admin-toggle" onclick="toggleAdmin()">&#9660; View full seat chart</button>
+      <div class="admin-section" id="admin-section">
+        <p class="admin-lbl">Official Seat Chart &mdash; NGWS 2026</p>
+        <table class="seat-table" id="seat-table">
+          <thead>
+            <tr>
+              <th>Seat</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Serial</th>
+            </tr>
+          </thead>
+          <tbody id="seat-tbody"></tbody>
+        </table>
+        <button class="btn-print" onclick="window.print()">&#9113; Print seat chart</button>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span>NGWS 2026 &mdash; NextGen Wealth Summit</span>
+      <span>4 July 2026 &middot; TCBC Youth Church</span>
+    </footer>
+
+    <script>
+      const SHEETDB_URL = "https://sheetdb.io/api/v1/bb81jmylk3aer";
+      let seatList = []; // deduplicated, sorted, seat-assigned
+
+      async function loadSeats() {
+        const res = await fetch(SHEETDB_URL);
+        const all = await res.json();
+
+        // Deduplicate by email — keep earliest timestamp
+        const map = new Map();
+        for (const rec of all) {
+          const key = rec.Email.trim().toLowerCase();
+          if (!map.has(key)) {
+            map.set(key, rec);
+          } else {
+            const existing = map.get(key);
+            if (new Date(rec.Timestamp) < new Date(existing.Timestamp)) {
+              map.set(key, rec);
+            }
+          }
+        }
+
+        // Sort by registration time → assign seat numbers
+        seatList = Array.from(map.values())
+          .sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp))
+          .map((rec, i) => ({ ...rec, _seat: i + 1 }));
+
+        return seatList;
+      }
+
+      function fmtDate(iso) {
+        try {
+          return new Date(iso).toLocaleDateString("en-GB", {
+            day: "numeric", month: "short", year: "numeric",
+            hour: "2-digit", minute: "2-digit"
+          });
+        } catch (_) { return iso; }
+      }
+
+      async function lookupSeat() {
+        const raw = document.getElementById("search-input").value.trim();
+        if (!raw) return;
+
+        const q = raw.toLowerCase();
+        const btn = document.getElementById("search-btn");
+        const loading = document.getElementById("loading");
+        const resultWrap = document.getElementById("result-wrap");
+        const found = document.getElementById("result-found");
+        const notFound = document.getElementById("result-notfound");
+
+        btn.disabled = true;
+        loading.classList.add("show");
+        resultWrap.classList.remove("show");
+        found.classList.remove("show");
+        notFound.classList.remove("show");
+
+        try {
+          if (!seatList.length) await loadSeats();
+
+          const match = seatList.find(rec =>
+            rec.Email.trim().toLowerCase() === q ||
+            rec.Name.trim().toLowerCase().includes(q) ||
+            rec.Serial.trim().toLowerCase() === q ||
+            rec.Phone.trim().replace(/\D/g, "").endsWith(q.replace(/\D/g, ""))
+          );
+
+          resultWrap.classList.add("show");
+          if (match) {
+            document.getElementById("res-name").textContent = match.Name;
+            document.getElementById("res-seat").textContent = String(match._seat).padStart(3, "0");
+            document.getElementById("res-serial").textContent = match.Serial;
+            document.getElementById("res-date").textContent = fmtDate(match.Timestamp);
+            found.classList.add("show");
+          } else {
+            notFound.classList.add("show");
+          }
+        } catch (err) {
+          console.error(err);
+          notFound.classList.add("show");
+          resultWrap.classList.add("show");
+        }
+
+        loading.classList.remove("show");
+        btn.disabled = false;
+      }
+
+      async function toggleAdmin() {
+        const sec = document.getElementById("admin-section");
+        const btn = document.querySelector(".admin-toggle");
+        sec.classList.toggle("show");
+
+        if (sec.classList.contains("show") && !seatList.length) {
+          btn.textContent = "Loading…";
+          await loadSeats();
+          renderTable();
+          btn.textContent = "▲ Hide seat chart";
+        } else if (sec.classList.contains("show")) {
+          renderTable();
+          btn.textContent = "▲ Hide seat chart";
+        } else {
+          btn.textContent = "▼ View full seat chart";
+        }
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById("seat-tbody");
+        tbody.innerHTML = seatList.map(rec => `
+          <tr>
+            <td><span class="seat-num">${String(rec._seat).padStart(3,"0")}</span></td>
+            <td class="seat-name">${esc(rec.Name)}</td>
+            <td>${esc(rec.Email)}</td>
+            <td>${esc(rec.Phone)}</td>
+            <td style="color:rgba(250,248,242,0.35);font-size:11px">${esc(rec.Serial)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g,"&amp;")
+          .replace(/</g,"&lt;")
+          .replace(/>/g,"&gt;")
+          .replace(/"/g,"&quot;");
+      }
+    </script>
+  </body>
+</html>

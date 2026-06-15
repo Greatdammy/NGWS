@@ -3225,9 +3225,10 @@
         // 3. Render ticket
         document.getElementById("t-serial").textContent = serial;
         document.getElementById("t-name").textContent = fullName;
+        const seatNumber = String(globalRegistered).padStart(3, "0");
         const seriesEl = document.getElementById("t-series-no");
         if (seriesEl)
-          seriesEl.textContent = `No. ${String(globalRegistered).padStart(3, "0")} / ${CFG.TOTAL_SEATS}`;
+          seriesEl.textContent = `No. ${seatNumber} / ${CFG.TOTAL_SEATS}`;
         document.getElementById("suc-msg").textContent =
           `\u201C${fname}, your seat is confirmed. Download your ticket below.\u201D`;
         const sucMsgEl = document.getElementById("suc-msg");
@@ -3258,7 +3259,7 @@
             await emailjs.send(
               CFG.EMAILJS_SERVICE_ID,
               CFG.EMAILJS_TEMPLATE_ID,
-              { to_name: fullName, to_email: email, serial, phone },
+              { to_name: fullName, to_email: email, serial, phone, seat_number: `No. ${seatNumber} / ${CFG.TOTAL_SEATS}` },
             );
             emailOk = true;
             sbOk.innerHTML = "&#10003; Ticket sent to " + escHtml(email);
