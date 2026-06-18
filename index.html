@@ -81,7 +81,7 @@
         EMAILJS_PUBLIC_KEY: "lKZ5jIxav3mK6JvZa",
         EMAILJS_SERVICE_ID: "service_599tber",
         EMAILJS_TEMPLATE_ID: "template_b8kmdxl",
-        SHEETDB_API_URL: "https://sheetdb.io/api/v1/bb81jmylk3aer",
+        GAS_URL: "https://script.google.com/macros/s/AKfycbzAdlkO84cnDk6-iilUwhRit8W6lMWKnsGX_taO56_S65lWH_J6CZbnDUzJ_89SWHgG/exec",
         SHEETDB_QA_URL: "https://sheetdb.io/api/v1/0wpy9tv7ank04",
         TOTAL_SEATS: 120,
         EVENT_DATE: "2026-07-04T09:00:00",
@@ -3000,6 +3000,12 @@
       function saveRegs(a) {
         localStorage.setItem("ngws_regs", JSON.stringify(a));
       }
+      function getPeak() {
+        return parseInt(localStorage.getItem("ngws_peak") || "0", 10);
+      }
+      function savePeak(n) {
+        if (n > getPeak()) localStorage.setItem("ngws_peak", String(n));
+      }
       function seatsLeft() {
         return CFG.TOTAL_SEATS - globalRegistered;
       }
@@ -3007,7 +3013,7 @@
         const n = seatsLeft();
         ["seats-hero", "seats-reg", "seats-form"].forEach((id) => {
           const el = document.getElementById(id);
-          if (el) el.textContent = n;
+          if (el) el.textContent = Math.max(n, 0);
         });
         const btn = document.getElementById("btn-reg");
         if (btn && n <= 0) {
@@ -3017,16 +3023,18 @@
       }
 
       async function fetchGlobalCount() {
-        globalRegistered = getRegs().length;
+        // Never let the count drop below the stored peak — once full, stay full
+        globalRegistered = Math.max(getRegs().length, getPeak());
         refreshSeats();
-        if (!CFG.SHEETDB_API_URL || CFG.SHEETDB_API_URL.includes("YOUR_"))
-          return;
+        if (!CFG.GAS_URL || CFG.GAS_URL.includes("YOUR_")) return;
         try {
-          const res = await fetch(CFG.SHEETDB_API_URL + "/count");
+          const res = await fetch(CFG.GAS_URL + "?action=count");
           if (res.ok) {
             const data = await res.json();
-            if (typeof data.rows === "number") {
-              globalRegistered = data.rows;
+            const count = parseInt(data.count, 10);
+            if (!isNaN(count)) {
+              globalRegistered = Math.max(globalRegistered, count);
+              savePeak(globalRegistered);
               refreshSeats();
             }
           }
@@ -3163,15 +3171,15 @@
           return;
         }
 
-        // Cross-device duplicate check via SheetDB
-        if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
+        // Cross-device duplicate check via Apps Script
+        if (CFG.GAS_URL && !CFG.GAS_URL.includes("YOUR_")) {
           try {
             const dupRes = await fetch(
-              `${CFG.SHEETDB_API_URL}/search?Email=${encodeURIComponent(email)}`,
+              `${CFG.GAS_URL}?action=check&email=${encodeURIComponent(email)}`,
             );
             if (dupRes.ok) {
               const dupData = await dupRes.json();
-              if (Array.isArray(dupData) && dupData.length > 0) {
+              if (dupData.exists) {
                 document.getElementById("err-dup").classList.add("show");
                 return;
               }
@@ -3196,24 +3204,22 @@
         });
         saveRegs(regs);
         globalRegistered++;
+        savePeak(globalRegistered);
         refreshSeats();
 
-        // 2. SheetDB — append row to Google Sheet
-        if (CFG.SHEETDB_API_URL && !CFG.SHEETDB_API_URL.includes("YOUR_")) {
-          fetch(CFG.SHEETDB_API_URL, {
+        // 2. Google Apps Script — append row to Google Sheet
+        if (CFG.GAS_URL && !CFG.GAS_URL.includes("YOUR_")) {
+          fetch(CFG.GAS_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
             body: JSON.stringify({
-              data: [
-                {
-                  Name: fullName,
-                  Email: email,
-                  Phone: phone,
-                  Source: src,
-                  Serial: serial,
-                  Timestamp: new Date().toISOString(),
-                },
-              ],
+              Name: fullName,
+              Email: email,
+              Phone: phone,
+              Source: src,
+              Serial: serial,
+              Timestamp: new Date().toISOString(),
             }),
           }).catch(() => {
             showToast(
@@ -3259,7 +3265,13 @@
             await emailjs.send(
               CFG.EMAILJS_SERVICE_ID,
               CFG.EMAILJS_TEMPLATE_ID,
-              { to_name: fullName, to_email: email, serial, phone, seat_number: `No. ${seatNumber} / ${CFG.TOTAL_SEATS}` },
+              {
+                to_name: fullName,
+                to_email: email,
+                serial,
+                phone,
+                seat_number: `No. ${seatNumber} / ${CFG.TOTAL_SEATS}`,
+              },
             );
             emailOk = true;
             sbOk.innerHTML = "&#10003; Ticket sent to " + escHtml(email);
